@@ -6,6 +6,11 @@ buildscript {
         ktlintVersion = "10.2.1"
         hiltVersion = "2.40"
         hiltCompilerVersion = "2.38.1"
+        retrofitVersion = "2.9.0"
+        logggingInterceptorVersion = "4.9.3"
+        googleGsonVersion = "2.8.9"
+        googleServicesVersion = "4.3.10"
+        firebaseBomVersion = "29.1.0"
     }
     repositories {
         google()
@@ -16,6 +21,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
