@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "627574646919",
+    "project_id": "mobile-news-d6b31",
+    "storage_bucket": "mobile-news-d6b31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627574646919:android:52ca61d8d2920c736ab022",
+        "android_client_info": {
+          "package_name": "com.wizeline.mobilenews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627574646919-pdv48ir63ksdk4bn9ukh3hkv353fke3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSPXwvr8e2ZfA8ruRVwFIMU--aMr0Oo90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627574646919-pdv48ir63ksdk4bn9ukh3hkv353fke3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

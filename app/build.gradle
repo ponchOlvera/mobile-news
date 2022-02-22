@@ -63,10 +63,19 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
 
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.google.code.gson:gson:$rootProject.googleGsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logggingInterceptorVersion"
 
     //Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt("com.google.dagger:hilt-android-compiler:$rootProject.hiltCompilerVersion")
+
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
