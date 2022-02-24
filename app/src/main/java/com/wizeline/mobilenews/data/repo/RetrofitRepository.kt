@@ -2,14 +2,18 @@ package com.wizeline.mobilenews.data.repo
 
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
 import com.wizeline.mobilenews.data.mappers.SafeApiCall
+import com.wizeline.mobilenews.data.models.CommunityNewsRaw
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.data.models.NewsRaw
+import com.wizeline.mobilenews.domain.repositories.NewsRepository
 import javax.inject.Inject
 
-class RetrofitRepository @Inject constructor(private val retrofitService: NewscatcherApiService) :
-    SafeApiCall() /* TODO: Add interface implementation*/ {
+class RetrofitRepository @Inject constructor(
+    private val retrofitService: NewscatcherApiService,
+    ) :
+    SafeApiCall(), NewsRepository {
 
-    suspend fun searchNews(
+    override suspend fun searchNews(
         query: String,
         dateFrom: String?,
         dateTo: String?,
