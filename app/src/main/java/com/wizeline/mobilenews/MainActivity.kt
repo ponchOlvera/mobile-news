@@ -3,11 +3,15 @@ package com.wizeline.mobilenews
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.wizeline.mobilenews.ui.dashboard.DashboardHomeContent
+import com.wizeline.mobilenews.ui.dashboard.DummyArticle
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,9 +19,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MobileNewsTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    mobileNewsApp {
+                    }
                 }
             }
         }
@@ -25,14 +29,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MobileNewsTheme {
-        Greeting("Android")
-    }
+fun mobileNewsApp(navigateToDetail: (DummyArticle) -> Unit) {
+    Scaffold(
+        content = {
+            DashboardHomeContent(navigateToDetail = navigateToDetail)
+        }
+    )
 }
