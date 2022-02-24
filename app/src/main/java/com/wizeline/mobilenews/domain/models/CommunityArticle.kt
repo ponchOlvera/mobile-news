@@ -2,7 +2,7 @@ package com.wizeline.mobilenews.domain.models
 
 import java.io.Serializable
 
-class CommunityArticle(
+data class CommunityArticle(
     val title: String,
     val author: String?,
     val publishedDate: String,
