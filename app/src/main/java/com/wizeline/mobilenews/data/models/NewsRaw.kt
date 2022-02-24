@@ -1,6 +1,7 @@
 package com.wizeline.mobilenews.data.models
 
 import com.google.gson.annotations.SerializedName
+import com.wizeline.mobilenews.domain.models.NewsArticle
 
 data class NewsRaw(
     val status: String,
@@ -11,5 +12,5 @@ data class NewsRaw(
     val totalPages: Int,
     @SerializedName("page_size")
     val pageSize: Int,
-    val articles: Any, /* TODO: Replace it with a list of articles (List<Article>)*/
+    val articles: List<NewsArticle>
 )
