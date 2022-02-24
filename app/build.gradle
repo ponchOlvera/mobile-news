@@ -72,6 +72,10 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt("com.google.dagger:hilt-android-compiler:$rootProject.hiltCompilerVersion")
 
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion")
     implementation 'com.google.firebase:firebase-analytics-ktx'
