@@ -1,6 +1,6 @@
 package com.wizeline.mobilenews.domain.di
 
-import com.wizeline.mobilenews.data.repo.RetrofitRepository
+import com.wizeline.mobilenews.data.repo.NetworkRepository
 import com.wizeline.mobilenews.domain.repositories.CommunityRepository
 import com.wizeline.mobilenews.domain.repositories.NewsRepository
 import com.wizeline.mobilenews.domain.usecases.*
@@ -15,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class AppModule {
 
     @Binds
-    abstract fun bindRetrofitRepository(retrofitRepository: RetrofitRepository): NewsRepository
+    abstract fun bindNetworkRepository(networkRepository: NetworkRepository): NewsRepository
 
     @Binds
     abstract fun bindCommunityRepository(

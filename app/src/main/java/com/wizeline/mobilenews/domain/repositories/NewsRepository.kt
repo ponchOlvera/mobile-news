@@ -1,6 +1,5 @@
 package com.wizeline.mobilenews.domain.repositories
 
-import com.wizeline.mobilenews.data.models.CommunityNewsRaw
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.data.models.NewsRaw
 

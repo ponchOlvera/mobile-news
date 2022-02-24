@@ -11,6 +11,7 @@ buildscript {
         googleGsonVersion = "2.8.9"
         googleServicesVersion = "4.3.10"
         firebaseBomVersion = "29.1.0"
+        coroutines_version = "1.6.0"
     }
     repositories {
         google()
