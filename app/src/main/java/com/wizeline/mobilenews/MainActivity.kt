@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun mobileNewsApp(navigateToDetail: (DummyArticle) -> Unit) {
     Scaffold(
