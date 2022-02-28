@@ -1,7 +1,8 @@
 package com.wizeline.mobilenews.ui.dashboard
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,14 +10,19 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
+import com.wizeline.mobilenews.domain.models.Article
+import com.wizeline.mobilenews.ui.theme.CompletelyLight
+import com.wizeline.mobilenews.ui.theme.Percent50Light
+import com.wizeline.mobilenews.ui.theme.percent20Light
 
 @Composable
-fun ArticleListItem(article: DummyArticle, navigateToDetail: (DummyArticle) -> Unit) {
+fun ArticleListItem(article: Article, navigateToDetail: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
@@ -25,31 +31,61 @@ fun ArticleListItem(article: DummyArticle, navigateToDetail: (DummyArticle) -> U
         elevation = 2.dp,
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .clickable { navigateToDetail(article) }) {
-            ArticleImage(article = article)
-            Text(text = article.title, modifier = Modifier.padding(8.dp))
-            Text(text = article.excerpt, modifier = Modifier.padding(8.dp))
+        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+            val (image, bottom_info) = createRefs()
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .constrainAs(image) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                }) {
+                ArticleImage(article = article)
+            }
+            ConstraintLayout(modifier = Modifier
+                .blur(radius = 50.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Percent50Light,
+                            percent20Light
+                        )
+                    )
+                )
+                .wrapContentHeight()
+                .constrainAs(bottom_info) {
+                    bottom.linkTo(parent.bottom)
+                }) {
+                val (title, author) = createRefs()
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(title) {
+                        top.linkTo(parent.top)
+                    }) {
+                    Text(text = article.title, modifier = Modifier.padding(8.dp))
+                }
+                Box(modifier = Modifier.constrainAs(author) {
+                    top.linkTo(title.bottom)
+                    end.linkTo(parent.end)
+                }) {
+                    Text(text = article.author ?: "", modifier = Modifier.padding(8.dp))
+                }
+
+            }
         }
+
     }
 }
 
 @Composable
-fun ArticleImage(article: DummyArticle) {
+fun ArticleImage(article: Article) {
     Image(
-        painter = rememberImagePainter("https://ewscripps.brightspotcdn.com/dims4/default/d47c692/2147483647/strip/true/crop/1280x672+0+144/resize/1200x630!/quality/90/?url=http%3A%2F%2Fewscripps-brightspot.s3.amazonaws.com%2F6f%2F91%2Ff935dc0440e595450ceb0d4d511f%2Fconstruction-accident.jpg"),
+        painter = rememberImagePainter(article.image),
         contentDescription = null,
         contentScale = ContentScale.FillWidth,
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .fillMaxHeight()
     )
-}
-
-@Preview
-@Composable
-fun PreviewArticleItem() {
-    ArticleListItem(article = DummyArticle(), navigateToDetail = {})
 }
