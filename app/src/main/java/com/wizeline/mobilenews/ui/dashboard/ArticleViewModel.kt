@@ -27,6 +27,7 @@ class ArticleViewModel @Inject constructor(private val useCase: SearchNewsUseCas
         get() = _queryForSearch.value ?: ""
         set(text) {
             _queryForSearch.value = text
+            println("Search: ${_queryForSearch.value}")
         }
 
     private fun getArticles() {

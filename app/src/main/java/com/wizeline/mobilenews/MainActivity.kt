@@ -8,8 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.ui.dashboard.DashboardHomeContent
-import com.wizeline.mobilenews.ui.navigation.ArticlesPager
-import com.wizeline.mobilenews.ui.navigation.PagerdHomeContent
+import com.wizeline.mobilenews.ui.navigation.PagerHomeContent
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +49,7 @@ val listArticles = listOf<Article>(
 fun mobileNewsApp(navigateToDetail: (Article) -> Unit) {
     Scaffold(
         content = {
-            PagerdHomeContent()
+            PagerHomeContent()
 //            DashboardHomeContent(navigateToDetail = navigateToDetail)
         }
     )
