@@ -18,8 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MobileNewsTheme {
                 Surface {
-                    mobileNewsApp {
-                    }
+                    mobileNewsApp()
                 }
             }
         }
@@ -27,12 +26,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun mobileNewsApp(navigateToDetail: (Article) -> Unit) {
+fun mobileNewsApp() {
     Scaffold(
         content = {
             ComposeNavigation()
-//            PagerHomeContent()
-//            DashboardHomeContent(navigateToDetail = navigateToDetail)
         }
     )
 }
