@@ -15,10 +15,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
-import com.google.accompanist.pager.pagerTabIndicatorOffset
+import androidx.navigation.NavController
+import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.Article
 import kotlinx.coroutines.launch
 

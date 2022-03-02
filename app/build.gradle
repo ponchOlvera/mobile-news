@@ -71,6 +71,9 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:$view_pager_compose"
     implementation "com.google.accompanist:accompanist-pager-indicators:$view_pager_compose"
 
+    //ComposePager
+    implementation "com.google.accompanist:accompanist-pager:$pager_version"
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"

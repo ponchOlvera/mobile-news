@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.wizeline.mobilenews.domain.models.Article
-import com.wizeline.mobilenews.ui.dashboard.CombinedTab
-import com.wizeline.mobilenews.ui.dashboard.DashboardHomeContent
+import com.wizeline.mobilenews.ui.navigation.ComposeNavigation
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,12 +26,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun mobileNewsApp(navigateToDetail: (Article) -> Unit) {
     Scaffold(
         content = {
-            CombinedTab()
+            ComposeNavigation()
+//            PagerHomeContent()
+//            DashboardHomeContent(navigateToDetail = navigateToDetail)
         }
     )
 }
