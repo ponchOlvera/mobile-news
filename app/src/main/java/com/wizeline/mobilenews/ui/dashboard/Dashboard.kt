@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.ui.theme.CompletelyLight

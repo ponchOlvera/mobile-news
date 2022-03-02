@@ -3,6 +3,11 @@
     <string name="community_title">Community</string>
     <string name="global_title">Global</string>
 
+<!--Screens-->
+    <string name="community_screen">Community</string>
+    <string name="global_screen">Global</string>
+    <string name="search_screen">Search</string>
+
 
     <string name="search">Search</string>
 </resources>
