@@ -36,4 +36,5 @@ abstract class AppModule {
     abstract fun bindSaveCommunityArticleUseCase(
         saveCommunityArticleUseCaseImpl: SaveCommunityArticleUseCaseImpl
     ): SaveCommunityArticleUseCase
+
 }

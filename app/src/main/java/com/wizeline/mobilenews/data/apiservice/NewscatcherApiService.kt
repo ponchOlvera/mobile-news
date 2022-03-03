@@ -15,12 +15,12 @@ interface NewscatcherApiService {
     suspend fun searchNews(
         @Query("q")
         query: String,
-        @Query("from")
+       /* @Query("from")
         dateFrom: String?,
         @Query("to")
         dateTo: String?,
         @Query("sort_by")
-        sortBy: String?,
+        sortBy: String?,*/
         @Query("page_size")
         pageSize: Int?,
         @Query("page")

@@ -10,9 +10,8 @@ import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(
     private val retrofitService: NewscatcherApiService,
-    private val firebaseFirestoreManager: FirebaseFirestoreManager
-) :
-    SafeApiCall() , NewsRepository {
+    //private val firebaseFirestoreManager: FirebaseFirestoreManager
+) : SafeApiCall(), NewsRepository {
 
     override suspend fun searchNews(
         query: String,
@@ -23,14 +22,14 @@ class NetworkRepository @Inject constructor(
         page: Int?
     ): NetworkResults<NewsRaw> {
         return doSafeCall {
-            retrofitService.searchNews(query, dateFrom, dateTo, sortBy, pageSize, page)
+            retrofitService.searchNews(query, /*dateFrom, dateTo, sortBy,*/ pageSize, page)
         }
     }
 
     //TODO: Create CommunityRepository and inherit interface?
-    suspend fun createCommunityArticle(article: Any) =
+    /*suspend fun createCommunityArticle(article: Any) =
         firebaseFirestoreManager.create(article)
 
     suspend fun getAllCommunityArticles() =
-        firebaseFirestoreManager.getAllCommunityArticles()
+        firebaseFirestoreManager.getAllCommunityArticles()*/
 }

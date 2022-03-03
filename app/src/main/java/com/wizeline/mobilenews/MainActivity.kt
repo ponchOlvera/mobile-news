@@ -3,21 +3,23 @@ package com.wizeline.mobilenews
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import com.wizeline.mobilenews.domain.models.Article
+import com.wizeline.mobilenews.ui.navigation.ComposeNavigation
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MobileNewsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                Surface {
+                    mobileNewsApp {
+                    }
                 }
             }
         }
@@ -25,14 +27,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MobileNewsTheme {
-        Greeting("Android")
-    }
+fun mobileNewsApp(navigateToDetail: (Article) -> Unit) {
+    Scaffold(
+        content = {
+            ComposeNavigation()
+//            PagerHomeContent()
+//            DashboardHomeContent(navigateToDetail = navigateToDetail)
+        }
+    )
 }
