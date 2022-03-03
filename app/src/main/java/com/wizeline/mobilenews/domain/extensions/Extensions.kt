@@ -17,7 +17,7 @@ fun NewsArticle.toArticle() = Article(
 fun CommunityArticle.toArticle() = Article(
     title,
     author,
-    publishedDate,
-    image,
-    summary
+    publishedDate.toString(),
+    imageUrl,
+    text
 )

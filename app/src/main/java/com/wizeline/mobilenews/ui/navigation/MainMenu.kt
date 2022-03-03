@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import com.wizeline.mobilenews.EMPTY_STR
+import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.fontDimensionResource
 
@@ -84,7 +84,7 @@ fun MainMenu(navController: NavController){
         ){
             Icon(
                 painterResource(R.drawable.ic_baseline_search_24),
-                contentDescription = EMPTY_STR,
+                contentDescription = EMPTY_STRING,
                 tint = Color.White,
             )
         }
