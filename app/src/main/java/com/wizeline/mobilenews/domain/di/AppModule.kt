@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.domain.di
 
+import com.wizeline.mobilenews.data.repo.FirebaseRepository
 import com.wizeline.mobilenews.data.repo.NetworkRepository
 import com.wizeline.mobilenews.domain.repositories.CommunityRepository
 import com.wizeline.mobilenews.domain.repositories.NewsRepository
@@ -19,7 +20,7 @@ abstract class AppModule {
 
     @Binds
     abstract fun bindCommunityRepository(
-        communityRepository: CommunityRepository //TODO: Change for repo implementation
+        communityRepository: FirebaseRepository
     ): CommunityRepository
 
     @Binds

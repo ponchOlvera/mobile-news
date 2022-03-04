@@ -13,12 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             MobileNewsTheme {
                 Surface {
-                    mobileNewsApp {
+                    MobileNewsApp {
                     }
                 }
             }
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun mobileNewsApp(navigateToDetail: (Article) -> Unit) {
+fun MobileNewsApp(navigateToDetail: (Article) -> Unit) {
     Scaffold(
         content = {
             ComposeNavigation()

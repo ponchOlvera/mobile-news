@@ -1,24 +1,23 @@
 package com.wizeline.mobilenews.data.db.firebase
 
 import android.util.Log
-import com.google.firebase.FirebaseApp
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.wizeline.mobilenews.data.models.NetworkResults
+import com.wizeline.mobilenews.domain.models.CommunityArticle
+import com.wizeline.mobilenews.domain.models.Tag
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseFirestoreManager(private val collectionName: String) {
 
-    companion object {
-        private val TAG = "FirestoreManager"
-    }
+    private val TAG = "FirestoreManager"
+    private var searchQueryList: List<String> = emptyList()
+    private var lastVisibleDocument: DocumentSnapshot? = null
 
     init {
         getFirestoreDbCollection(collectionName)
@@ -29,40 +28,125 @@ class FirebaseFirestoreManager(private val collectionName: String) {
     }
 
     suspend fun create(
-        article: Any /* TODO: Change to article type implementation*/
-    ): String = suspendCoroutine { cor ->
+        article: CommunityArticle
+    ): NetworkResults<String?> = suspendCoroutine { cor ->
         // Create a hash map with the article information
-        val communityArticle = hashMapOf(
-            "author" to "Poncho",
-            "image_url" to "www.example.com",
-            "published_date" to Timestamp.now(),
-            "text" to "this is the article content",
-            "title" to "title"
+        val communityArticleHashMap = hashMapOf(
+            AUTHOR to article.author,
+            IMAGE_URL to article.imageUrl,
+            PUBLISHED_DATE to article.publishedDate,
+            TAGS to article.tags,
+            TEXT to article.text,
+            TITLE to article.title
         )
 
+        var tagList: List<Tag> = emptyList()
+
+        getTagsCollection {
+            tagList = it
+            Log.i(TAG, "TagList: ${tagList.toString()}")
+            article.tags.forEach {
+                val tag = Tag(it)
+                if (!tagList.contains(tag)) {
+                    addTagToTagsCollection(tag)
+                }
+            }
+        }
+
         getFirestoreDbCollection(collectionName)
-            .add(communityArticle)
+            .add(communityArticleHashMap)
             .addOnSuccessListener {
-                cor.resume(it.id)
+                cor.resume(NetworkResults.Success(it.id))
             }
             .addOnFailureListener {
-                cor.resume("")
-                Log.e(TAG, "An error occurred during the creation of a new document")
+                val errorMessage = "An error occurred during the creation of a new document"
+                cor.resume(NetworkResults.Error(errorMessage))
+                Log.e(TAG, errorMessage)
+                it.printStackTrace()
+            }
+        Log.i(TAG, tagList.toString())
+    }
+
+    private fun getTagsCollection(callback: (List<Tag>) -> Unit) {
+        val tagsDbReference = getFirestoreDbCollection(TAGS_COLLECTION)
+        tagsDbReference.get()
+            .addOnSuccessListener { tagsCollection ->
+                val tagList = tagsCollection.toObjects(Tag::class.java)
+                callback(tagList)
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+                callback(emptyList())
+            }
+    }
+
+    private fun addTagToTagsCollection(tag: Tag) {
+        getFirestoreDbCollection(TAGS_COLLECTION).add(tag)
+            .addOnSuccessListener {
+                Log.i(TAG, "OnSuccessListener(): ${it.id}")
+            }
+            .addOnFailureListener {
+                Log.i(TAG, "OnFailureListener(): ${it.message}")
+            }
+    }
+
+    suspend fun searchCommunityArticles(
+        query: List<String> = emptyList(),
+        dateFrom: Long,
+        dateTo: Long?,
+        page: Int = 1,
+        pageSize: Int = 20
+    ): List<CommunityArticle> = suspendCoroutine { cor ->
+
+        if (query != searchQueryList) {
+            searchQueryList = query
+            lastVisibleDocument = null
+        }
+
+        val searchRequest = getFirestoreDbCollection(collectionName)
+
+        val searchQuery: Query = if (searchQueryList.isNotEmpty()) {
+            searchRequest
+                .whereArrayContainsAny(TAGS, searchQueryList)
+                .orderBy(PUBLISHED_DATE, Query.Direction.DESCENDING)
+                .limit(pageSize.toLong())
+        } else {
+            searchRequest
+                .orderBy(PUBLISHED_DATE, Query.Direction.DESCENDING)
+                .limit(pageSize.toLong())
+        }
+
+        searchQuery.get(Source.SERVER)
+            .addOnSuccessListener {
+                val documentSize = it.documents.size
+                if (documentSize > 0) {
+                    lastVisibleDocument = it.documents[it.size() - 1]
+                    val articleList = it.toObjects(CommunityArticle::class.java)
+                    cor.resume(articleList)
+                }
+                Log.i(TAG, "${it.documents.size}")
+            }
+            .addOnFailureListener {
+                cor.resume(emptyList())
+                Log.e(TAG, "An error occurred while searching the community articles")
                 it.printStackTrace()
             }
     }
 
+    companion object {
+        const val ARTICLE_COLLECTION = "CommunityArticles"
+        const val TAGS_COLLECTION = "Tags"
 
-    suspend fun getAllCommunityArticles(): QuerySnapshot? = suspendCoroutine {cor ->
-        getFirestoreDbCollection(collectionName)
-            .get()
-            .addOnSuccessListener {
-                cor.resume(it)
-            }
-            .addOnFailureListener {
-                cor.resume(null)
-                Log.e(TAG, "An error occurred while getting the document")
-                it.printStackTrace()
-            }
+        //Firebase fields
+        const val AUTHOR = "author"
+        const val IMAGE_URL = "imageUrl"
+        const val PUBLISHED_DATE = "publishedDate"
+        const val TAGS = "tags"
+        const val TEXT = "text"
+        const val TITLE = "title"
+        const val TITLE_LOWER_CASE = "titleLowerCase"
+
+        // Unicode Search (Private Usage Area)
+        const val SEARCH_DELIMITER = "\uf8ff"
     }
 }

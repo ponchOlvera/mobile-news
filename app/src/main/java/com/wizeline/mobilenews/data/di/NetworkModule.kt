@@ -3,6 +3,10 @@ package com.wizeline.mobilenews.data.di
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
 import com.wizeline.mobilenews.data.apiservice.RetrofitProvider
 import com.wizeline.mobilenews.data.apiservice.SupportInterceptor
+import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager
+import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager.Companion.ARTICLE_COLLECTION
+import com.wizeline.mobilenews.data.repo.FirebaseRepository
+import com.wizeline.mobilenews.data.repo.NetworkRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +19,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideNetworkRepository(newscatcherApiService: NewscatcherApiService): NetworkRepository =
+        NetworkRepository(newscatcherApiService)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseRepository(firebaseFirestoreManager: FirebaseFirestoreManager): FirebaseRepository =
+        FirebaseRepository(firebaseFirestoreManager)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestoreManager(): FirebaseFirestoreManager =
+        FirebaseFirestoreManager(ARTICLE_COLLECTION)
 
     @Provides
     @Singleton

@@ -29,6 +29,9 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -91,6 +94,9 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    // Desugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -59,7 +59,7 @@ fun ScrollableArticle(article: Article) {
         ConstraintLayout(Modifier.fillMaxWidth()) {
             val author = createRef()
             Text(
-                text = article.author ?: EMPTY_STR,
+                text = article.author ?: EMPTY_STRING,
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.subtitle1,
