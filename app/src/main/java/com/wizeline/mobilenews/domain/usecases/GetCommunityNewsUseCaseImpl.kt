@@ -5,9 +5,7 @@ import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.extensions.toArticle
 import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.domain.models.CommunityArticle
-import com.wizeline.mobilenews.domain.models.NewsArticle
 import com.wizeline.mobilenews.domain.repositories.CommunityRepository
-import com.wizeline.mobilenews.domain.repositories.NewsRepository
 
 class GetCommunityNewsUseCaseImpl(
     private val communityRepository: CommunityRepository

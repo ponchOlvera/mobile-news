@@ -70,9 +70,11 @@ dependencies {
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "com.google.accompanist:accompanist-pager:$view_pager_compose"
     implementation "com.google.accompanist:accompanist-pager-indicators:$view_pager_compose"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
-    //ComposePager
-    implementation "com.google.accompanist:accompanist-pager:$pager_version"
+    //Pagination
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-guava:$paging_version"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"

@@ -5,26 +5,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.wizeline.mobilenews.domain.models.Article
-
-
-//https://github.com/google/accompanist/blob/main/sample/src/main/java/com/google/accompanist/sample/pager/HorizontalPagerTransitionSample.kt
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ArticlesPager(articles: List<Article>) {
+fun ArticlesPager(articles: LazyPagingItems<Article>) {
+    val pagerState = rememberPagerState(pageCount = 50)
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
     ) {
         HorizontalPager(
-            count = articles.size,
+            state = pagerState,
             modifier = Modifier
                 .fillMaxHeight()
         ) { page ->
-            ScrollableArticle(articles[page])
+            articles[page]?.let { article ->
+                ScrollableArticle(article)
+            }
+
         }
     }
 }

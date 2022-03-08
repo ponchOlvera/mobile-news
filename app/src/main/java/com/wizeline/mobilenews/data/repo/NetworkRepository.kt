@@ -1,35 +1,48 @@
 package com.wizeline.mobilenews.data.repo
 
+import androidx.lifecycle.LiveData
+import androidx.paging.*
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
-import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager
-import com.wizeline.mobilenews.data.mappers.SafeApiCall
-import com.wizeline.mobilenews.data.models.NetworkResults
-import com.wizeline.mobilenews.data.models.NewsRaw
+import com.wizeline.mobilenews.domain.data_source.NewsSearchPagingSource
+import com.wizeline.mobilenews.domain.models.NewsArticle
 import com.wizeline.mobilenews.domain.repositories.NewsRepository
 import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(
     private val retrofitService: NewscatcherApiService,
-    //private val firebaseFirestoreManager: FirebaseFirestoreManager
-) : SafeApiCall(), NewsRepository {
+    private val dataSource: PagingSource<Int, NewsArticle>
+) : NewsRepository {
 
-    override suspend fun searchNews(
+    override fun searchNews(
         query: String,
-        dateFrom: String?,
-        dateTo: String?,
-        sortBy: String?,
-        pageSize: Int?,
-        page: Int?
-    ): NetworkResults<NewsRaw> {
-        return doSafeCall {
-            retrofitService.searchNews(query, /*dateFrom, dateTo, sortBy,*/ pageSize, page)
-        }
+    ): LiveData<PagingData<NewsArticle>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 50,
+                enablePlaceholders = true,
+                maxSize = 60,
+                prefetchDistance = 5,
+                initialLoadSize = 50
+            ),
+            pagingSourceFactory = {
+                NewsSearchPagingSource(
+                    retrofitService,
+                    query
+                )
+            }).liveData
     }
 
-    //TODO: Create CommunityRepository and inherit interface?
-    /*suspend fun createCommunityArticle(article: Any) =
-        firebaseFirestoreManager.create(article)
-
-    suspend fun getAllCommunityArticles() =
-        firebaseFirestoreManager.getAllCommunityArticles()*/
+    override fun allNews(): LiveData<PagingData<NewsArticle>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 50,
+                enablePlaceholders = true,
+                maxSize = 60,
+                prefetchDistance = 5,
+                initialLoadSize = 50
+            ),
+            pagingSourceFactory = {
+                dataSource
+            }).liveData
+    }
 }

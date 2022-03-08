@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,13 +23,14 @@ import coil.compose.rememberImagePainter
 import com.wizeline.mobilenews.*
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.domain.models.Article
+import com.wizeline.mobilenews.ui.theme.Typography
 
 @Composable
 fun ScrollableArticle(article: Article) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     val imageHeightPercentage = ARTICLE_IMG_HEIGHT
-    val remainingTitleHeight = screenHeight/imageHeightPercentage
+    val remainingTitleHeight = screenHeight / imageHeightPercentage
     Column(
         Modifier
             .verticalScroll(rememberScrollState())
@@ -43,9 +43,9 @@ fun ScrollableArticle(article: Article) {
         )
         Text(
             text = article.title,
-            color = Color.Gray,
+            color = Color.LightGray,
             textAlign = TextAlign.Center,
-            fontSize = fontDimensionResource(R.dimen.title_size),
+            style = Typography.h1,
             modifier = Modifier
                 .padding(
                     top = dimensionResource(R.dimen.padding_30),
@@ -60,9 +60,9 @@ fun ScrollableArticle(article: Article) {
             val author = createRef()
             Text(
                 text = article.author ?: EMPTY_STR,
-                color = Color.Gray,
+                color = Color.LightGray,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.subtitle1,
+                style = Typography.body1,
                 modifier = Modifier
                     .constrainAs(author) {
                         end.linkTo(parent.end)
@@ -74,14 +74,15 @@ fun ScrollableArticle(article: Article) {
         }
         Text(
             text = article.text,
-            color = Color.Gray,
+            color = Color.LightGray,
             textAlign = TextAlign.Justify,
-            style = MaterialTheme.typography.subtitle1,
+            style = Typography.body1,
             modifier = Modifier
                 .padding(
                     top = dimensionResource(R.dimen.padding_30),
                     start = dimensionResource(R.dimen.default_padding),
-                    end = dimensionResource(R.dimen.padding_30))
+                    end = dimensionResource(R.dimen.padding_30)
+                )
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_height)))
@@ -92,7 +93,7 @@ fun ScrollableArticle(article: Article) {
 @Composable
 fun NewsImage(article: Article, modifier: Modifier = Modifier) {
     var articleImg = article.image
-    if(REGEX_IMG.toRegex() !in articleImg){
+    if (REGEX_IMG.toRegex() !in articleImg) {
         articleImg = DEFAULT_ARTICLE_IMG
     }
     Image(
@@ -103,7 +104,7 @@ fun NewsImage(article: Article, modifier: Modifier = Modifier) {
             }
         ),
         contentDescription = null,
-        contentScale = ContentScale.FillHeight,
+        contentScale = ContentScale.Crop,
         modifier = modifier
             .fillMaxWidth()
             .drawWithCache {

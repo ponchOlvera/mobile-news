@@ -17,6 +17,6 @@ fun ComposeNavigation(){
     NavHost(navController = navController, startDestination = globalScreen) {
         composable(globalScreen) { GlobalScreen(navController) }
         composable(communityScreen) { CommunityScreen(navController) }
-        composable(searchScreen) { DashboardHomeContent{} }
+        composable(searchScreen) { DashboardHomeContent(navController) }
     }
 }

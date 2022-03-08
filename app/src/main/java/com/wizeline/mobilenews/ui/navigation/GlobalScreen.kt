@@ -1,33 +1,20 @@
 package com.wizeline.mobilenews.ui.navigation
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
-import com.wizeline.mobilenews.data.models.NetworkResults
-import com.wizeline.mobilenews.ui.dashboard.ArticleViewModel
+import com.wizeline.mobilenews.ui.custom.CustomArticlesPager
 
 @Composable
 fun GlobalScreen(navController: NavController) {
-    val viewModel: ArticleViewModel = hiltViewModel()
-    val list = viewModel.newsList.observeAsState()
-
-    Box(modifier = Modifier.fillMaxHeight()){
-        list.value?.let { result ->
-            when (result) {
-                is NetworkResults.Error -> {
-                }
-
-                is NetworkResults.Loading -> {
-                }
-                is NetworkResults.Success -> {
-                    ArticlesPager(result.data!!)
-                }
-            }
-        }
+    val viewModel: GlobalScreenViewModel = hiltViewModel()
+    val list = viewModel.getArticles().asFlow()
+    Column(modifier = Modifier.fillMaxHeight()) {
         MainMenu(navController = navController)
+        CustomArticlesPager(list)
     }
 }

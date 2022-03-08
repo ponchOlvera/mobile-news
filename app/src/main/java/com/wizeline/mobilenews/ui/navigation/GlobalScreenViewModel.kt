@@ -1,4 +1,4 @@
-package com.wizeline.mobilenews.ui.dashboard
+package com.wizeline.mobilenews.ui.navigation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +13,9 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class ArticleViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel() {
+class GlobalScreenViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel()  {
 
-    fun getArticlesBySearch(queryForSearch: String): LiveData<PagingData<Article>> {
-        return useCase.getFilteredArticles(queryForSearch).cachedIn(viewModelScope)
+    fun getArticles(): LiveData<PagingData<Article>> {
+        return useCase.getAllArticles().cachedIn(viewModelScope)
     }
-
 }

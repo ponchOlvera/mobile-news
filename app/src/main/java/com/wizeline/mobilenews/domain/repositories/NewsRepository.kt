@@ -1,17 +1,15 @@
 package com.wizeline.mobilenews.domain.repositories
 
-import com.wizeline.mobilenews.data.models.NetworkResults
-import com.wizeline.mobilenews.data.models.NewsRaw
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import com.wizeline.mobilenews.domain.models.NewsArticle
 
 interface NewsRepository {
 
-    suspend fun searchNews(
-        query: String,
-        dateFrom: String?,
-        dateTo: String?,
-        sortBy: String?,
-        pageSize: Int?,
-        page: Int?
-    ): NetworkResults<NewsRaw>
+    fun searchNews(
+        query: String
+    ): LiveData<PagingData<NewsArticle>>
+
+    fun allNews(): LiveData<PagingData<NewsArticle>>
 
 }
