@@ -12,5 +12,6 @@
     <string name="search">Search</string>
     <string name="dismiss">Dismiss</string>
     <string name="empty_list">EMPTY LIST</string>
-    <string name="empty_list_message">"Enter a word to start the search"</string>
+    <string name="empty_list_message">Enter a word to start the search</string>
+    <string name="error_message">we are having some problems please try again later</string>
 </resources>

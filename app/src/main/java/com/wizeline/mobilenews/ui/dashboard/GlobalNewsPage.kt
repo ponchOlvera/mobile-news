@@ -23,14 +23,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.wizeline.mobilenews.*
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.domain.models.Article
-import com.wizeline.mobilenews.ui.custom.CustomDialog
 import com.wizeline.mobilenews.ui.theme.Typography
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalPagerApi::class)
+@ExperimentalCoroutinesApi
 @Composable
 fun GlobalNewsScreen() {
     val viewModel: GlobalNewsViewModel = hiltViewModel()
@@ -43,37 +42,17 @@ fun GlobalNewsScreen() {
             }
             lazyArticles.apply {
                 when {
-                    loadState.refresh is
-                            LoadState.Loading -> {
-                        item {
-                            CustomDialog(
-                                loadState.toString()
-                            )
-                        }
+                    loadState.refresh is LoadState.Loading -> {
+                        item { LoadingItem() }
                     }
-                    loadState.append is
-                            LoadState.Loading -> {
-                        item {
-                            CustomDialog(
-                                loadState.toString()
-                            )
-                        }
+                    loadState.append is LoadState.Loading -> {
+                        item { LoadingItem() }
                     }
-                    loadState.refresh is
-                            LoadState.Error -> {
-                        item {
-                            CustomDialog(
-                                loadState.toString()
-                            )
-                        }
+                    loadState.refresh is LoadState.Error -> {
+                        item { ShowErrorOrDialog(loadState.refresh as LoadState.Error) }
                     }
-                    loadState.append is
-                            LoadState.Error -> {
-                        item {
-                            CustomDialog(
-                                loadState.toString()
-                            )
-                        }
+                    loadState.append is LoadState.Error -> {
+                        item { ShowErrorOrDialog(loadState.append as LoadState.Error) }
                     }
                 }
             }

@@ -100,7 +100,7 @@ fun ShowErrorOrDialog(state: LoadState.Error) {
                 .padding(8.dp)
         )
     } else {
-        CustomDialog(state.error.message.toString())
+        CustomDialog(stringResource(R.string.error_message))
     }
 }
 
