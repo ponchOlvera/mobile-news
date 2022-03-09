@@ -19,7 +19,7 @@ fun CommunityScreen(navController: NavController){
     ConstraintLayout(modifier = Modifier.fillMaxHeight()) {
         val (fabBtn) = createRefs()
         //ArticlesPager(articles = listArticles )
-        MainMenu(navController = navController)
+        //MainMenu(navController = navController)
         FloatingActionButton(
             onClick = { /*TODO*/ },
             backgroundColor = Percent50Light,
