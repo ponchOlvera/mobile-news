@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import com.wizeline.mobilenews.EMPTY_STR
+import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.theme.Typography
 
@@ -94,14 +94,15 @@ fun MainMenu(
                 modifier = Modifier.constrainAs(searchButton) {
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)
-                },
-            ) {
-                Icon(
-                    painterResource(R.drawable.ic_baseline_search_24),
-                    contentDescription = EMPTY_STR,
-                    tint = Color.White,
-                )
-            }
+                    bottom.linkTo(parent.bottom)
+                }
+                .padding(dimensionResource(R.dimen.default_padding)),
+        ){
+            Icon(
+                painterResource(R.drawable.ic_baseline_search_24),
+                contentDescription = EMPTY_STRING,
+                tint = Color.White,
+            )
         }
     }
 }

@@ -25,3 +25,7 @@ fun CommunityArticle.toArticle() = Article(
 fun Int?.orOne() = this ?: 1
 
 fun List<NewsArticle>?.orEmpty() = this ?: emptyList()
+    publishedDate.toString(),
+    imageUrl,
+    text
+)

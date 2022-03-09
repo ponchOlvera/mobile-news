@@ -1,13 +1,13 @@
 package com.wizeline.mobilenews.domain.usecases
 
-import com.wizeline.mobilenews.data.models.NetworkResults
-import com.wizeline.mobilenews.domain.models.Article
+import com.wizeline.mobilenews.domain.models.CommunityArticle
 
 interface GetCommunityNewsUseCase {
     suspend operator fun invoke(
-        dateFrom: String?,
-        dateTo: String?,
-        pageSize: Int?,
-        page: Int?
-    ): NetworkResults<List<Article>>
+        query: List<String> = emptyList(),
+        dateFrom: Long = System.currentTimeMillis(),
+        dateTo: Long? = null,
+        pageSize: Int = 20,
+        page: Int = 1
+    ): List<CommunityArticle>
 }

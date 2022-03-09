@@ -5,6 +5,9 @@ import androidx.paging.*
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
 import com.wizeline.mobilenews.domain.data_source.NewsSearchPagingSource
 import com.wizeline.mobilenews.domain.models.NewsArticle
+import com.wizeline.mobilenews.data.mappers.SafeApiCall
+import com.wizeline.mobilenews.data.models.NetworkResults
+import com.wizeline.mobilenews.data.models.NewsRaw
 import com.wizeline.mobilenews.domain.repositories.NewsRepository
 import javax.inject.Inject
 
@@ -12,6 +15,9 @@ class NetworkRepository @Inject constructor(
     private val retrofitService: NewscatcherApiService,
     private val dataSource: PagingSource<Int, NewsArticle>
 ) : NewsRepository {
+    private val retrofitService: NewscatcherApiService
+) :
+    SafeApiCall(), NewsRepository {
 
     override fun searchNews(
         query: String,

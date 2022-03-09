@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import com.wizeline.mobilenews.EMPTY_STR
+import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.theme.Percent50Light
 
@@ -33,7 +33,7 @@ fun CommunityScreen(navController: NavController) {
         {
             Icon(
                 painterResource(R.drawable.ic_baseline_add_24),
-                contentDescription = EMPTY_STR,
+                contentDescription = EMPTY_STRING,
                 tint = Color.White,
             )
         }

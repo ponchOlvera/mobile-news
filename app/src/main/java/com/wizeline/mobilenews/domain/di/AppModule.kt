@@ -1,6 +1,7 @@
 package com.wizeline.mobilenews.domain.di
 
 import androidx.paging.PagingSource
+import com.wizeline.mobilenews.data.repo.FirebaseRepository
 import com.wizeline.mobilenews.data.repo.NetworkRepository
 import com.wizeline.mobilenews.domain.data_source.AllNewsPagingSource
 import com.wizeline.mobilenews.domain.models.NewsArticle
@@ -26,7 +27,7 @@ abstract class AppModule {
 
     @Binds
     abstract fun bindCommunityRepository(
-        communityRepository: CommunityRepository //TODO: Change for repo implementation
+        communityRepository: FirebaseRepository
     ): CommunityRepository
 
     @Binds
