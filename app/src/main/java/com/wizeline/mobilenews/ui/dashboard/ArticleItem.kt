@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.ui.theme.Percent50Light
@@ -31,7 +32,7 @@ fun ArticleListItem(article: Article) {
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-            val (image, bottom_info, title, author) = createRefs()
+            val (image, bottom_info) = createRefs()
             Box(modifier = Modifier
                 .fillMaxSize()
                 .constrainAs(image) {
@@ -42,7 +43,7 @@ fun ArticleListItem(article: Article) {
                 }) {
                 ArticleImage(article = article)
             }
-           ConstraintLayout(modifier = Modifier
+            ConstraintLayout(modifier = Modifier
                 .blur(radius = 150.dp)
                 .background(
                     brush = Brush.horizontalGradient(
@@ -52,34 +53,36 @@ fun ArticleListItem(article: Article) {
                         )
                     )
                 )
-                .height(50.dp)
+                .fillMaxWidth()
+                .height(80.dp)
                 .constrainAs(bottom_info) {
                     bottom.linkTo(parent.bottom)
-                }){
-               Text(text = article.title,
-                   style = Typography.h2,
-                   modifier = Modifier
-                       .padding(8.dp)
-                       .constrainAs(title) {
-                           top.linkTo(parent.top)
-                       })
-           }
+                }) {
+                val (title, author) = createRefs()
+                Text(text = article.title,
+                    style = Typography.h4,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .constrainAs(title) {
+                            top.linkTo(parent.top)
+                        })
 
-            Text(
-                text = article.author ?: "",
-                style = Typography.h2,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .constrainAs(author) {
-                        top.linkTo(title.bottom)
-                        end.linkTo(parent.end)
-                    }
-            )
+                Text(
+                    text = article.author.orEmpty(),
+                    style = Typography.h4,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .constrainAs(author) {
+                            top.linkTo(title.bottom)
+                            end.linkTo(parent.end)
+                        }
+                )
+            }
         }
-
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun ArticleImage(article: Article) {
     Image(

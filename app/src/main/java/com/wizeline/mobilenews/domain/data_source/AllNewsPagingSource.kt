@@ -24,7 +24,7 @@ class AllNewsPagingSource @Inject constructor(private val retrofitService: Newsc
         } else {
             val responseResult = response.body()
             LoadResult.Page(
-                data = responseResult?.articles ?: emptyList(),
+                data = responseResult?.articles.orEmpty(),
                 prevKey = if (position == 1) null else position - 1,
                 nextKey = if (position == responseResult?.articles?.size) null else position + 1
             )

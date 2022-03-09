@@ -27,6 +27,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.wizeline.mobilenews.*
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.domain.models.Article
+import com.wizeline.mobilenews.ui.custom.CustomDialog
 import com.wizeline.mobilenews.ui.theme.Typography
 
 @OptIn(ExperimentalPagerApi::class)
@@ -44,22 +45,35 @@ fun GlobalNewsScreen() {
                 when {
                     loadState.refresh is
                             LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item {
+                            CustomDialog(
+                                loadState.toString()
+                            )
+                        }
                     }
                     loadState.append is
                             LoadState.Loading -> {
-                        item { LoadingItem() }
-                        item { LoadingItem() }
+                        item {
+                            CustomDialog(
+                                loadState.toString()
+                            )
+                        }
                     }
                     loadState.refresh is
                             LoadState.Error -> {
-                        item { LoadingItem() }
-                        item { LoadingItem() }
+                        item {
+                            CustomDialog(
+                                loadState.toString()
+                            )
+                        }
                     }
                     loadState.append is
                             LoadState.Error -> {
-                        item { LoadingItem() }
-                        item { LoadingItem() }
+                        item {
+                            CustomDialog(
+                                loadState.toString()
+                            )
+                        }
                     }
                 }
             }

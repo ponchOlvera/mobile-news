@@ -21,3 +21,7 @@ fun CommunityArticle.toArticle() = Article(
     image,
     summary
 )
+
+fun Int?.orOne() = this ?: 1
+
+fun List<NewsArticle>?.orEmpty() = this ?: emptyList()

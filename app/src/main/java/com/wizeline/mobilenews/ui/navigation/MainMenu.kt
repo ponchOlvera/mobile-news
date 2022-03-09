@@ -103,6 +103,5 @@ fun MainMenu(
                 )
             }
         }
-
     }
 }
