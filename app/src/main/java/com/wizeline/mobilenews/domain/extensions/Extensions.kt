@@ -6,11 +6,11 @@ import com.wizeline.mobilenews.domain.models.NewsArticle
 
 
 fun NewsArticle.toArticle() = Article(
-    title,
+    title.orEmpty(),
     author,
-    publishedDate,
-    image,
-    summary,
+    publishedDate.orEmpty(),
+    image.orEmpty(),
+    summary.orEmpty(),
     link
 )
 
@@ -21,3 +21,7 @@ fun CommunityArticle.toArticle() = Article(
     imageUrl,
     text
 )
+
+fun Int?.orOne() = this ?: 1
+
+fun List<NewsArticle>?.orEmpty() = this ?: emptyList()

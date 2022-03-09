@@ -20,10 +20,11 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    @Provides
+  /*  @Provides
     @Singleton
-    fun provideNetworkRepository(newscatcherApiService: NewscatcherApiService): NetworkRepository =
-        NetworkRepository(newscatcherApiService)
+    fun provideNetworkRepository(
+        newscatcherApiService: NewscatcherApiService
+    ): NetworkRepository = NetworkRepository(newscatcherApiService)*/
 
     @Provides
     @Singleton

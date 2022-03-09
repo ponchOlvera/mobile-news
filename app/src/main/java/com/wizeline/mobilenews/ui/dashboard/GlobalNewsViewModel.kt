@@ -13,10 +13,9 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class ArticleViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel() {
+class GlobalNewsViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel()  {
 
-    fun getArticlesBySearch(queryForSearch: String): LiveData<PagingData<Article>> {
-        return useCase.getFilteredArticles(queryForSearch).cachedIn(viewModelScope)
+    fun getArticles(): LiveData<PagingData<Article>> {
+        return useCase.getAllArticles().cachedIn(viewModelScope)
     }
-
 }

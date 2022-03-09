@@ -2,7 +2,6 @@ package com.wizeline.mobilenews.ui.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,14 +14,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.wizeline.mobilenews.domain.models.Article
-import com.wizeline.mobilenews.ui.theme.CompletelyLight
 import com.wizeline.mobilenews.ui.theme.Percent50Light
+import com.wizeline.mobilenews.ui.theme.Typography
 import com.wizeline.mobilenews.ui.theme.percent20Light
 
 @Composable
-fun ArticleListItem(article: Article, navigateToDetail: (Article) -> Unit) {
+fun ArticleListItem(article: Article) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
@@ -44,7 +44,7 @@ fun ArticleListItem(article: Article, navigateToDetail: (Article) -> Unit) {
                 ArticleImage(article = article)
             }
             ConstraintLayout(modifier = Modifier
-                .blur(radius = 50.dp)
+                .blur(radius = 150.dp)
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
@@ -53,37 +53,42 @@ fun ArticleListItem(article: Article, navigateToDetail: (Article) -> Unit) {
                         )
                     )
                 )
-                .wrapContentHeight()
+                .fillMaxWidth()
+                .height(80.dp)
                 .constrainAs(bottom_info) {
                     bottom.linkTo(parent.bottom)
                 }) {
                 val (title, author) = createRefs()
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .constrainAs(title) {
-                        top.linkTo(parent.top)
-                    }) {
-                    Text(text = article.title, modifier = Modifier.padding(8.dp))
-                }
-                Box(modifier = Modifier.constrainAs(author) {
-                    top.linkTo(title.bottom)
-                    end.linkTo(parent.end)
-                }) {
-                    Text(text = article.author ?: "", modifier = Modifier.padding(8.dp))
-                }
+                Text(text = article.title,
+                    style = Typography.h4,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .constrainAs(title) {
+                            top.linkTo(parent.top)
+                        })
 
+                Text(
+                    text = article.author.orEmpty(),
+                    style = Typography.h4,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .constrainAs(author) {
+                            top.linkTo(title.bottom)
+                            end.linkTo(parent.end)
+                        }
+                )
             }
         }
-
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun ArticleImage(article: Article) {
     Image(
         painter = rememberImagePainter(article.image),
         contentDescription = null,
-        contentScale = ContentScale.FillWidth,
+        contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
