@@ -14,10 +14,7 @@ import javax.inject.Inject
 class NetworkRepository @Inject constructor(
     private val retrofitService: NewscatcherApiService,
     private val dataSource: PagingSource<Int, NewsArticle>
-) : NewsRepository {
-    private val retrofitService: NewscatcherApiService
-) :
-    SafeApiCall(), NewsRepository {
+) : SafeApiCall(), NewsRepository {
 
     override fun searchNews(
         query: String,

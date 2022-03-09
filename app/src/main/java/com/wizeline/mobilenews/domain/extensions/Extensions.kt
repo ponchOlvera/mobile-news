@@ -17,15 +17,11 @@ fun NewsArticle.toArticle() = Article(
 fun CommunityArticle.toArticle() = Article(
     title,
     author,
-    publishedDate,
-    image,
-    summary
+    publishedDate.toString(),
+    imageUrl,
+    text
 )
 
 fun Int?.orOne() = this ?: 1
 
 fun List<NewsArticle>?.orEmpty() = this ?: emptyList()
-    publishedDate.toString(),
-    imageUrl,
-    text
-)

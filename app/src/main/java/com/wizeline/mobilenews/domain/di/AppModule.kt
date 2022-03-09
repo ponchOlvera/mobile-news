@@ -21,7 +21,6 @@ abstract class AppModule {
     @Binds
     abstract fun bindNetworkRepository(networkRepository: NetworkRepository): NewsRepository
 
-
     @Binds
     abstract fun bindAllNewsPagingSource(dataSource: AllNewsPagingSource): PagingSource<Int, NewsArticle>
 

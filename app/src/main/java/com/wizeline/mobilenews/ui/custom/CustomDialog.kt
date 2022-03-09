@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.theme.Typography
@@ -28,7 +29,7 @@ fun CustomDialog(dialogMessage: String) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = dialogMessage, style = Typography.h2)
+                    Text(text = dialogMessage, style = Typography.h2, textAlign = TextAlign.Center)
                 }
             },
             buttons = {

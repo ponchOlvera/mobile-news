@@ -91,18 +91,20 @@ fun MainMenu(
                         launchSingleTop = true
                     }
                 },
-                modifier = Modifier.constrainAs(searchButton) {
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
-                .padding(dimensionResource(R.dimen.default_padding)),
-        ){
-            Icon(
-                painterResource(R.drawable.ic_baseline_search_24),
-                contentDescription = EMPTY_STRING,
-                tint = Color.White,
-            )
+                modifier = Modifier
+                    .constrainAs(searchButton) {
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .padding(dimensionResource(R.dimen.default_padding)),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_baseline_search_24),
+                    contentDescription = EMPTY_STRING,
+                    tint = Color.White,
+                )
+            }
         }
     }
 }
