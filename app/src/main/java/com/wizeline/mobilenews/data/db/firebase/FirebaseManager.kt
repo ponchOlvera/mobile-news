@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.data.db.firebase
 
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -7,9 +8,13 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.ktx.storage
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.CommunityArticle
 import com.wizeline.mobilenews.domain.models.Tag
+import com.wizeline.mobilenews.toFormattedDateString
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -18,6 +23,7 @@ class FirebaseFirestoreManager(private val collectionName: String) {
     private val TAG = "FirestoreManager"
     private var searchQueryList: List<String> = emptyList()
     private var lastVisibleDocument: DocumentSnapshot? = null
+    private lateinit var imageReference: StorageReference
 
     init {
         getFirestoreDbCollection(collectionName)
@@ -27,44 +33,74 @@ class FirebaseFirestoreManager(private val collectionName: String) {
         return Firebase.firestore.collection(collectionName)
     }
 
-    suspend fun create(
-        article: CommunityArticle
+    suspend fun createArticle(
+        article: CommunityArticle,
+        imageUri: Uri
     ): NetworkResults<String?> = suspendCoroutine { cor ->
-        // Create a hash map with the article information
-        val communityArticleHashMap = hashMapOf(
-            AUTHOR to article.author,
-            IMAGE_URL to article.imageUrl,
-            PUBLISHED_DATE to article.publishedDate,
-            TAGS to article.tags,
-            TEXT to article.text,
-            TITLE to article.title
-        )
 
-        var tagList: List<Tag> = emptyList()
+        saveImageInCloudFirestore(imageUri, article.publishedDate)
+            .addOnSuccessListener { task ->
+                imageReference.downloadUrl
+                    .addOnSuccessListener { downloadUrl ->
 
-        getTagsCollection {
-            tagList = it
-            Log.i(TAG, "TagList: ${tagList.toString()}")
-            article.tags.forEach {
-                val tag = Tag(it)
-                if (!tagList.contains(tag)) {
-                    addTagToTagsCollection(tag)
-                }
-            }
-        }
+                        Log.i(TAG, "${downloadUrl}")
+                        // Create a hash map with the article information
+                        val communityArticleHashMap = hashMapOf(
+                            AUTHOR to article.author,
+                            IMAGE_URL to downloadUrl.toString(),
+                            PUBLISHED_DATE to article.publishedDate,
+                            TAGS to article.tags,
+                            TEXT to article.text,
+                            TITLE to article.title
+                        )
 
-        getFirestoreDbCollection(collectionName)
-            .add(communityArticleHashMap)
-            .addOnSuccessListener {
-                cor.resume(NetworkResults.Success(it.id))
+                        var tagList: List<Tag> = emptyList()
+
+                        getTagsCollection { list ->
+                            tagList = list
+                            Log.i(TAG, "TagList: $tagList")
+                            article.tags.forEach {
+                                val tag = Tag(it)
+                                if (!tagList.contains(tag)) {
+                                    addTagToTagsCollection(tag)
+                                }
+                            }
+                        }
+
+                        getFirestoreDbCollection(collectionName)
+                            .add(communityArticleHashMap)
+                            .addOnSuccessListener {
+                                cor.resume(NetworkResults.Success(it.id))
+                            }
+                            .addOnFailureListener {
+                                val errorMessage =
+                                    "An error occurred during the creation of a new document"
+                                cor.resume(NetworkResults.Error(errorMessage))
+                                Log.e(TAG, errorMessage)
+                                it.printStackTrace()
+                            }
+                        Log.i(TAG, tagList.toString())
+                    }
+                    .addOnCanceledListener {
+
+                    }
+
+
             }
             .addOnFailureListener {
-                val errorMessage = "An error occurred during the creation of a new document"
+                val errorMessage = "The image could not be saved."
                 cor.resume(NetworkResults.Error(errorMessage))
                 Log.e(TAG, errorMessage)
                 it.printStackTrace()
             }
-        Log.i(TAG, tagList.toString())
+
+    }
+
+    private fun saveImageInCloudFirestore(imageUri: Uri, publishedDate: Long?): UploadTask {
+        val storageReference = Firebase.storage(STORAGE_REFERENCE)
+        val imageName = publishedDate?.toFormattedDateString()
+        imageReference = storageReference.getReference("$STORAGE_FOLDER$imageName.jpg")
+        return imageReference.putFile(imageUri)
     }
 
     private fun getTagsCollection(callback: (List<Tag>) -> Unit) {
@@ -145,6 +181,10 @@ class FirebaseFirestoreManager(private val collectionName: String) {
         const val TEXT = "text"
         const val TITLE = "title"
         const val TITLE_LOWER_CASE = "titleLowerCase"
+
+        //Cloud Firestore
+        const val STORAGE_REFERENCE = "gs://mobile-news-d6b31.appspot.com"
+        const val STORAGE_FOLDER = "images/"
 
         // Unicode Search (Private Usage Area)
         const val SEARCH_DELIMITER = "\uf8ff"

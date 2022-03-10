@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wizeline.mobilenews.R
+import com.wizeline.mobilenews.ui.createArticle.CreateArticleScreen
 import com.wizeline.mobilenews.ui.custom.CustomPager
 import com.wizeline.mobilenews.ui.dashboard.Dashboard
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,6 +18,7 @@ fun ComposeNavigation() {
     val communityScreen = stringResource(R.string.community_screen)
     val globalScreen = stringResource(R.string.global_screen)
     val searchScreen = stringResource(R.string.search_screen)
+    val createArticleScreen = stringResource(R.string.create_article_screen)
     NavHost(navController = navController, startDestination = globalScreen) {
         composable(globalScreen) {
             CustomPager(
@@ -25,5 +27,6 @@ fun ComposeNavigation() {
             )
         }
         composable(searchScreen) { Dashboard(navController) }
+        composable(createArticleScreen) { CreateArticleScreen(navController) }
     }
 }
