@@ -1,21 +1,18 @@
 package com.wizeline.mobilenews.ui.createArticle
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -25,8 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -35,11 +33,10 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
-import com.wizeline.mobilenews.domain.models.CommunityArticle
 import com.wizeline.mobilenews.ui.common.GradientButton
 import com.wizeline.mobilenews.ui.common.OutlinedFormInput
-import com.wizeline.mobilenews.ui.navigation.MainMenu
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import com.wizeline.mobilenews.ui.theme.SpaceCadet
 import kotlinx.coroutines.launch
@@ -98,11 +95,11 @@ private fun ArticleForm(navController: NavController) {
         })
 
     val focusKeyboard = LocalSoftwareKeyboardController.current
-    val deviceDensity = LocalDensity.current.density
 
     val modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
+
     val onDoneCallback: () -> Unit = {
         focusKeyboard?.hide()
     }
@@ -143,6 +140,34 @@ private fun ArticleForm(navController: NavController) {
     }
     Surface(color = MaterialTheme.colors.background) {
         Column {
+            ConstraintLayout(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()) {
+                val (backIcon, titleText) = createRefs()
+                IconButton(
+                    onClick = {
+                        navController.popBackStack()
+                    },
+                    modifier = Modifier
+                        .constrainAs(backIcon) {
+                            start.linkTo(parent.start)
+                            top.linkTo(parent.top)
+                        },
+                ) {
+                    Icon(
+                        painterResource(R.drawable.ic_baseline_arrow_back_24),
+                        contentDescription = EMPTY_STRING,
+                        tint = Color.White,
+                    )
+                }
+                Text(text = "CREATE ARTICLE", modifier = Modifier
+                    .padding(dimensionResource(R.dimen.default_padding))
+                    .constrainAs(titleText) {
+                        end.linkTo(parent.end)
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    })
+            }
             OutlinedFormInput(
                 articleName,
                 "Post title",
