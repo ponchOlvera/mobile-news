@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.data.repo
 
+import android.net.Uri
 import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.CommunityArticle
@@ -18,6 +19,9 @@ class FirebaseRepository @Inject constructor(
     ): List<CommunityArticle> =
         firebaseFirestoreManager.searchCommunityArticles(query, dateFrom, dateTo, page, pageSize)
 
-    override suspend fun saveArticle(communityArticle: CommunityArticle): NetworkResults<String?> =
-        firebaseFirestoreManager.create(communityArticle)
+    override suspend fun saveArticle(
+        communityArticle: CommunityArticle,
+        imageUri: Uri
+    ): NetworkResults<String?> =
+        firebaseFirestoreManager.createArticle(communityArticle, imageUri)
 }

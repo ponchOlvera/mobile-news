@@ -1,24 +1,19 @@
 package com.wizeline.mobilenews
 
 import androidx.annotation.DimenRes
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 @ReadOnlyComposable
 fun fontDimensionResource(@DimenRes id: Int) = dimensionResource(id = id).value.sp
 
-//@Composable
-//@ReadOnlyComposable
-//fun navigateTo(navController: NavController, screen: String){
-//    val currentRoute = navController.currentBackStackEntry?.destination?.route
-////    val screenStr = stringResource(screen)
-//    if ( currentRoute != screen ){
-//        navController.navigate(screen)
-//    }
-//}
+fun Long.toFormattedDateString(): String {
+    val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+    val date = Date(this)
+    return formatter.format(date)
+}

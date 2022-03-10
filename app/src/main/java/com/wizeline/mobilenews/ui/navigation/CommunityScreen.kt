@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
@@ -17,10 +18,15 @@ import com.wizeline.mobilenews.ui.theme.Percent50Light
 
 @Composable
 fun CommunityScreen(navController: NavController) {
+    val createArticleScreen = stringResource(R.string.create_article_screen)
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (fabBtn) = createRefs()
         FloatingActionButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate(createArticleScreen) {
+                    launchSingleTop = true
+                }
+            },
             backgroundColor = Percent50Light,
             modifier = Modifier
                 .padding(8.dp)
