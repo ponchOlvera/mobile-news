@@ -7,8 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.custom.CustomPager
-import com.wizeline.mobilenews.ui.dashboard.DashboardHomeContent
+import com.wizeline.mobilenews.ui.dashboard.Dashboard
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun ComposeNavigation() {
     val navController = rememberNavController()
@@ -22,6 +24,6 @@ fun ComposeNavigation() {
                 navController = navController
             )
         }
-        composable(searchScreen) { DashboardHomeContent(navController) }
+        composable(searchScreen) { Dashboard(navController) }
     }
 }

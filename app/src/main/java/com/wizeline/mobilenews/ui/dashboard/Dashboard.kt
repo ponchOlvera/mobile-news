@@ -3,19 +3,12 @@ package com.wizeline.mobilenews.ui.dashboard
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,14 +16,13 @@ import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.wizeline.mobilenews.R
-import com.wizeline.mobilenews.ui.custom.CustomDialog
-import com.wizeline.mobilenews.ui.theme.Typography
+import com.wizeline.mobilenews.ui.custom.LoadingItem
+import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun DashboardHomeContent(navController: NavController) {
+fun Dashboard(navController: NavController) {
     val viewModel: ArticleViewModel = hiltViewModel()
     val textState = remember { mutableStateOf(TextFieldValue()) }
     val list =
@@ -65,7 +57,7 @@ fun DashboardHomeContent(navController: NavController) {
                 },
                 content = {
                     items(list.itemCount) { index ->
-                        list[index]?.let { ArticleListItem(article = it) }
+                        list[index]?.let { ArticleItem(article = it) }
                     }
                     list.apply {
                         when {
@@ -86,34 +78,4 @@ fun DashboardHomeContent(navController: NavController) {
                 })
         }
     }
-}
-
-@Composable
-fun ShowErrorOrDialog(state: LoadState.Error) {
-    if (state.error.message.toString() == stringResource(R.string.empty_list)) {
-        Text(
-            text = stringResource(id = R.string.empty_list_message),
-            color = Color.LightGray,
-            textAlign = TextAlign.Center,
-            style = Typography.body1,
-            modifier = Modifier
-                .padding(8.dp)
-        )
-    } else {
-        CustomDialog(stringResource(R.string.error_message))
-    }
-}
-
-@Composable
-fun LoadingItem() {
-    CircularProgressIndicator(
-        modifier =
-        Modifier
-            .testTag("ProgressBarItem")
-            .fillMaxWidth()
-            .padding(16.dp)
-            .wrapContentWidth(
-                Alignment.CenterHorizontally
-            )
-    )
 }
