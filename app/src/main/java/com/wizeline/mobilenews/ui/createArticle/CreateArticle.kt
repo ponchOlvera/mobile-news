@@ -5,8 +5,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -35,8 +33,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
+import com.wizeline.mobilenews.ui.common.CustomSnackbar
 import com.wizeline.mobilenews.ui.common.GradientButton
 import com.wizeline.mobilenews.ui.common.OutlinedFormInput
+import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import com.wizeline.mobilenews.ui.theme.SpaceCadet
 import kotlinx.coroutines.launch
@@ -58,34 +58,34 @@ private fun ArticleForm(navController: NavController) {
     val createArticleViewModel: CreateArticleViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
 
-    val uiState = remember {
+    val uiState =
         createArticleViewModel.uiState
+
+    var snackbarMessage by remember {
+        mutableStateOf(EMPTY_STRING)
     }
 
-    var articleName by remember {
-        createArticleViewModel.articleName
-    }
-    var articleAuthor by remember {
+    val articleTitle =
+        createArticleViewModel.articleTitle
+    val articleAuthor =
         createArticleViewModel.articleAuthor
-    }
-    var articleDescription by remember {
+
+    val articleDescription =
         createArticleViewModel.articleDescription
-    }
-    var imageUri by remember {
-        createArticleViewModel.imageUri
-    }
+
     val context = LocalContext.current
-    var bitmap by remember {
+    val bitmap = remember {
         mutableStateOf(
             ContextCompat.getDrawable(context, R.drawable.select_image)?.toBitmap()
         )
     }
+
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri: Uri? ->
-            imageUri = uri
-            imageUri?.let {
-                bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            createArticleViewModel.updateImageUri(uri ?: Uri.EMPTY)
+            uri?.let {
+                bitmap.value = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     val source = ImageDecoder.createSource(context.contentResolver, it)
                     ImageDecoder.decodeBitmap(source)
                 } else {
@@ -93,6 +93,10 @@ private fun ArticleForm(navController: NavController) {
                 }
             }
         })
+
+    var showLoader by remember {
+        mutableStateOf(false)
+    }
 
     val focusKeyboard = LocalSoftwareKeyboardController.current
 
@@ -113,36 +117,37 @@ private fun ArticleForm(navController: NavController) {
     }
 
     //Handle the UiState
-    uiState.value.let {
+    uiState.let {
         when (it) {
-            is CreateArticleViewModel.UiState.MissingFieldAction -> Toast.makeText(
-                context,
-                it.message,
-                Toast.LENGTH_SHORT
-            ).show()
-            is CreateArticleViewModel.UiState.LoadingState -> Toast.makeText(
-                context,
-                "Uploading post...",
-                Toast.LENGTH_SHORT
-            ).show()
-            is CreateArticleViewModel.UiState.RequestCompleted -> {
-                Log.i("CreateArticle()", it.message)
-                Toast.makeText(
-                    context,
-                    it.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-                navController.popBackStack()
-                uiState.value = CreateArticleViewModel.UiState.NoState
+            is CreateArticleViewModel.UiState.MissingFieldAction -> {
+                snackbarMessage = it.message
+                createArticleViewModel.restartUiState()
             }
-            else -> {}
+            is CreateArticleViewModel.UiState.LoadingState -> {
+                snackbarMessage = "Uploading post..."
+                showLoader = true
+                createArticleViewModel.restartUiState()
+            }
+            is CreateArticleViewModel.UiState.RequestCompleted -> {
+                showLoader = false
+                snackbarMessage = it.message
+                navController.popBackStack()
+                createArticleViewModel.restartUiState()
+            }
+            else -> {
+                snackbarMessage = EMPTY_STRING
+            }
         }
     }
+
+    CustomSnackbar(text = snackbarMessage)
     Surface(color = MaterialTheme.colors.background) {
         Column {
-            ConstraintLayout(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()) {
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
                 val (backIcon, titleText) = createRefs()
                 IconButton(
                     onClick = {
@@ -168,10 +173,13 @@ private fun ArticleForm(navController: NavController) {
                         top.linkTo(parent.top)
                     })
             }
+            if (showLoader) {
+                LoadingProgressBar()
+            }
             OutlinedFormInput(
-                articleName,
+                articleTitle,
                 "Post title",
-                { articleName = it },
+                { createArticleViewModel.updateArticleTitle(it) },
                 backgroundInputColor,
                 onDoneCallback,
                 modifier
@@ -179,7 +187,7 @@ private fun ArticleForm(navController: NavController) {
             OutlinedFormInput(
                 articleAuthor,
                 "Post author",
-                { articleAuthor = it },
+                { createArticleViewModel.updateArticleAuthor(it) },
                 backgroundInputColor,
                 onDoneCallback,
                 modifier
@@ -187,7 +195,7 @@ private fun ArticleForm(navController: NavController) {
             OutlinedFormInput(
                 articleDescription,
                 "Post description",
-                { articleDescription = it },
+                { createArticleViewModel.updateArticleDescription(it) },
                 backgroundInputColor,
                 onDoneCallback,
                 modifier.height(180.dp),
@@ -199,7 +207,7 @@ private fun ArticleForm(navController: NavController) {
                     .padding(vertical = 8.dp)
             ) {
                 Image(
-                    bitmap = bitmap!!.asImageBitmap(),
+                    bitmap = bitmap.value!!.asImageBitmap(),
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 16.dp)
@@ -219,11 +227,12 @@ private fun ArticleForm(navController: NavController) {
             Row(Modifier.padding(top = 24.dp)) {
                 GradientButton(
                     text = "CREATE POST",
+                    enabled = !showLoader,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .weight(1f)
                 ) {
-                    coroutineScope.launch() {
+                    coroutineScope.launch {
                         createArticleViewModel.createCommunityPost()
                     }
                 }
