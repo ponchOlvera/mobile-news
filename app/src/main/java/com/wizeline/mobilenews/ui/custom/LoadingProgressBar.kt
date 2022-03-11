@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingItem() {
+fun LoadingProgressBar() {
     CircularProgressIndicator(
         modifier =
         Modifier

@@ -16,7 +16,7 @@ import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.wizeline.mobilenews.ui.custom.LoadingItem
+import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -62,10 +62,10 @@ fun Dashboard(navController: NavController) {
                     list.apply {
                         when {
                             loadState.refresh is LoadState.Loading -> {
-                                item { LoadingItem() }
+                                item { LoadingProgressBar() }
                             }
                             loadState.append is LoadState.Loading -> {
-                                item { LoadingItem() }
+                                item { LoadingProgressBar() }
                             }
                             loadState.refresh is LoadState.Error -> {
                                 item { ShowErrorOrDialog(loadState.refresh as LoadState.Error) }

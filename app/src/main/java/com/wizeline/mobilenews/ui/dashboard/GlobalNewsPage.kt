@@ -14,7 +14,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.wizeline.mobilenews.HALF_PAST_ITEM_LEFT
 import com.wizeline.mobilenews.HALF_PAST_ITEM_RIGHT
 import com.wizeline.mobilenews.ui.custom.CustomScrollableArticle
-import com.wizeline.mobilenews.ui.custom.LoadingItem
+import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,13 +36,13 @@ fun GlobalNewsPage() {
             items(lazyArticles.itemCount) { index ->
                 lazyArticles[index]?.let { article -> CustomScrollableArticle(article) }
 
-                if(!listState.isScrollInProgress){
-                    if(listState.isHalfPastItemLeft())
+                if (!listState.isScrollInProgress) {
+                    if (listState.isHalfPastItemLeft())
                         coroutineScope.scrollBasic(listState, left = true)
                     else
                         coroutineScope.scrollBasic(listState)
 
-                    if(listState.isHalfPastItemRight())
+                    if (listState.isHalfPastItemRight())
                         coroutineScope.scrollBasic(listState)
                     else
                         coroutineScope.scrollBasic(listState, left = true)
@@ -51,10 +51,10 @@ fun GlobalNewsPage() {
             lazyArticles.apply {
                 when {
                     loadState.refresh is LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item { LoadingProgressBar() }
                     }
                     loadState.append is LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item { LoadingProgressBar() }
                     }
                     loadState.refresh is LoadState.Error -> {
                         item { ShowErrorOrDialog(loadState.refresh as LoadState.Error) }
@@ -69,9 +69,9 @@ fun GlobalNewsPage() {
 }
 
 //TODO: Make extensions file and import
-private fun CoroutineScope.scrollBasic(listState: LazyListState, left: Boolean = false){
+private fun CoroutineScope.scrollBasic(listState: LazyListState, left: Boolean = false) {
     launch {
-        val pos = if(left) listState.firstVisibleItemIndex else listState.firstVisibleItemIndex+1
+        val pos = if (left) listState.firstVisibleItemIndex else listState.firstVisibleItemIndex + 1
         listState.animateScrollToItem(pos)
     }
 }

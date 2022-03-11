@@ -1,7 +1,10 @@
 package com.wizeline.mobilenews.ui.common
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -27,6 +30,7 @@ fun GradientButton(
             Capri
         )
     ),
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -36,10 +40,12 @@ fun GradientButton(
         contentPadding = PaddingValues(),
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
         shape = RoundedCornerShape(30.dp)
     ) {
         Box(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
                 .background(gradient, RoundedCornerShape(30.dp))
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             contentAlignment = Alignment.Center
