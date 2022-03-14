@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.data.apiservice
 
+import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApi.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ class RetrofitProvider @Inject constructor(val okHttpClient: OkHttpClient) {
 }
 
 object NewscatcherApi {
-    const val BASE_URL = "https://api.newscatcherapi.com/v2/"
-    const val SEARCH_NEWS = "search"
-    const val LATEST_HEADLINES = "latest_headlines"
+    const val BASE_URL = context.getString(R.string.api_base_url)
+    const val SEARCH_NEWS = context.getString(R.string.api_search_endpoint)
+    const val LATEST_HEADLINES = context.getString(R.string.api_latest_headlines_endpoint)
 }

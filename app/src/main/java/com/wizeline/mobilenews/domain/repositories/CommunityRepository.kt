@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.domain.repositories
 
+import android.net.Uri
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.CommunityArticle
 
@@ -13,6 +14,9 @@ interface CommunityRepository {
         page: Int,
     ): List<CommunityArticle>
 
-    suspend fun saveArticle(communityArticle: CommunityArticle): NetworkResults<String?>
+    suspend fun saveArticle(
+        communityArticle: CommunityArticle,
+        imageUri: Uri
+    ): NetworkResults<String?>
 
 }

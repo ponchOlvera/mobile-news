@@ -1,52 +1,60 @@
 package com.wizeline.mobilenews.ui.dashboard
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asFlow
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
-import com.wizeline.mobilenews.*
-import com.wizeline.mobilenews.R
-import com.wizeline.mobilenews.domain.models.Article
-import com.wizeline.mobilenews.ui.theme.Typography
+import com.wizeline.mobilenews.HALF_PAST_ITEM_LEFT
+import com.wizeline.mobilenews.HALF_PAST_ITEM_RIGHT
+import com.wizeline.mobilenews.ui.custom.CustomScrollableArticle
+import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
+import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @Composable
-fun GlobalNewsScreen() {
+fun GlobalNewsPage() {
     val viewModel: GlobalNewsViewModel = hiltViewModel()
     val articles = viewModel.getArticles().asFlow()
     val lazyArticles = articles.collectAsLazyPagingItems()
-    LazyRow(modifier = Modifier.fillMaxSize(),
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
+    LazyRow(
+        state = listState,
+        modifier = Modifier.fillMaxSize(),
         content = {
             items(lazyArticles.itemCount) { index ->
                 lazyArticles[index]?.let { article -> CustomScrollableArticle(article) }
+
+                if (!listState.isScrollInProgress) {
+                    if (listState.isHalfPastItemLeft())
+                        coroutineScope.scrollBasic(listState, left = true)
+                    else
+                        coroutineScope.scrollBasic(listState)
+
+                    if (listState.isHalfPastItemRight())
+                        coroutineScope.scrollBasic(listState)
+                    else
+                        coroutineScope.scrollBasic(listState, left = true)
+                }
             }
             lazyArticles.apply {
                 when {
                     loadState.refresh is LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item { LoadingProgressBar() }
                     }
                     loadState.append is LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item { LoadingProgressBar() }
                     }
                     loadState.refresh is LoadState.Error -> {
                         item { ShowErrorOrDialog(loadState.refresh as LoadState.Error) }
@@ -123,35 +131,12 @@ fun CustomScrollableArticle(article: Article) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun NewsImage(article: Article, modifier: Modifier = Modifier) {
-    var articleImg = article.image
-    if (REGEX_IMG.toRegex() !in articleImg) {
-        articleImg = DEFAULT_ARTICLE_IMG
-    }
-    Image(
-        painter = rememberImagePainter(
-            data = articleImg,
-            builder = {
-                placeholder(R.drawable.ic_launcher_background) //Todo: Change placeholder to loading
-            }
-        ),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = modifier
-            .fillMaxWidth()
-            .drawWithCache {
-                val gradient = Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, Color.Black),
-                    startY = size.height - (size.height / ARTICLE_IMG_GRADIENT_HEIGHT),
-                    endY = size.height
-                )
-                onDrawWithContent {
-                    drawContent()
-                    drawRect(gradient, blendMode = BlendMode.Multiply)
-                }
-            }
+private fun LazyListState.isHalfPastItemRight(): Boolean {
+    return firstVisibleItemScrollOffset > HALF_PAST_ITEM_RIGHT
+}
 
-    )
+@Composable
+private fun LazyListState.isHalfPastItemLeft(): Boolean {
+    return firstVisibleItemScrollOffset <= HALF_PAST_ITEM_LEFT
 }
