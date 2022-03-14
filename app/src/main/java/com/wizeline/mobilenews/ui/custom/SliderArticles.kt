@@ -8,13 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asFlow
-import androidx.navigation.NavController
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.wizeline.mobilenews.HALF_PAST_ITEM_LEFT
 import com.wizeline.mobilenews.HALF_PAST_ITEM_RIGHT
 import com.wizeline.mobilenews.domain.models.Article
@@ -29,12 +24,9 @@ fun SliderArticles(
     articles: LazyPagingItems<Article>,
     navigateToPos: Int = 0
 ) {
-//fun SliderArticles(result: LiveData<PagingData<Article>>) {
-//fun SliderArticles(articles: List<Article>, la) {
-//    val articles = result.asFlow().collectAsLazyPagingItems()
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    println("Items: ${articles.itemCount}")
+
     LaunchedEffect(key1 = Unit, block = {
         coroutineScope.launch {
             listState.scrollToItem(navigateToPos)
