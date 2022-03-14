@@ -14,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.theme.Capri
 import com.wizeline.mobilenews.ui.theme.MediumPurple
 
@@ -60,7 +62,7 @@ fun GradientButton(
 fun PreviewGradientButton() {
     Row() {
         GradientButton(
-            text = "Click me!",
+            text = stringResource(R.string.btn_click_me),
             modifier = Modifier.weight(1f)
         ) {
 

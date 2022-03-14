@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -124,7 +125,7 @@ private fun ArticleForm(navController: NavController) {
                 createArticleViewModel.restartUiState()
             }
             is CreateArticleViewModel.UiState.LoadingState -> {
-                snackbarMessage = "Uploading post..."
+                snackbarMessage = stringResource(R.string.msg_uploading_post)
                 showLoader = true
                 createArticleViewModel.restartUiState()
             }
@@ -165,7 +166,7 @@ private fun ArticleForm(navController: NavController) {
                         tint = Color.White,
                     )
                 }
-                Text(text = "CREATE ARTICLE", modifier = Modifier
+                Text(text = stringResource(R.string.title_create_article), modifier = Modifier
                     .padding(dimensionResource(R.dimen.default_padding))
                     .constrainAs(titleText) {
                         end.linkTo(parent.end)
@@ -214,7 +215,7 @@ private fun ArticleForm(navController: NavController) {
                         .clip(RoundedCornerShape(12.dp))
                         .height(120.dp),
                     contentScale = ContentScale.Crop,
-                    contentDescription = "Select an image..."
+                    contentDescription = stringResource(R.string.msg_select_image)
                 )
                 GradientButton("UPLOAD IMAGE",
                     modifier = Modifier
@@ -226,7 +227,7 @@ private fun ArticleForm(navController: NavController) {
             }
             Row(Modifier.padding(top = 24.dp)) {
                 GradientButton(
-                    text = "CREATE POST",
+                    text = stringResource(R.string.btn_label_create_post),
                     enabled = !showLoader,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
