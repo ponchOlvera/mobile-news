@@ -15,4 +15,12 @@
     <string name="empty_list">EMPTY LIST</string>
     <string name="empty_list_message">Enter a word to start the search</string>
     <string name="error_message">we are having some problems please try again later</string>
+    <string name="btn_click_me">Click me!</string>
+    <string name="api_base_url">https://api.newscatcherapi.com/v2/</string>
+    <string name="api_search_endpoint">search</string>
+    <string name="api_latest_headlines_endpoint">latest_headlines</string>
+    <string name="msg_uploading_post">Uploading post...</string>
+    <string name="title_create_article">CREATE ARTICLE</string>
+    <string name="msg_select_image">Select an image...</string>
+    <string name="btn_label_create_post">CREATE POST</string>
 </resources>

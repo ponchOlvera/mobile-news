@@ -185,8 +185,5 @@ class FirebaseFirestoreManager(private val collectionName: String) {
         //Cloud Firestore
         const val STORAGE_REFERENCE = "gs://mobile-news-d6b31.appspot.com"
         const val STORAGE_FOLDER = "images/"
-
-        // Unicode Search (Private Usage Area)
-        const val SEARCH_DELIMITER = "\uf8ff"
     }
 }
