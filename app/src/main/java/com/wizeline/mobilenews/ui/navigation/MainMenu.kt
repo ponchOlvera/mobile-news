@@ -55,7 +55,6 @@ fun MainMenu(
                 ) {
                     Text(
                         text = tab.tabName,
-                        color = Color.LightGray,
                         style = if (selected[index].value) Typography.h3 else Typography.h2,
                         modifier = Modifier
                             .padding(dimensionResource(R.dimen.default_padding))

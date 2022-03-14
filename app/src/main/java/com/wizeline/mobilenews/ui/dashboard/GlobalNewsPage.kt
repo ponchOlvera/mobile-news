@@ -86,7 +86,6 @@ fun CustomScrollableArticle(article: Article) {
         )
         Text(
             text = article.title,
-            color = Color.LightGray,
             textAlign = TextAlign.Center,
             style = Typography.h1,
             modifier = Modifier
@@ -99,7 +98,6 @@ fun CustomScrollableArticle(article: Article) {
         )
         Text(
             text = article.author ?: EMPTY_STR,
-            color = Color.LightGray,
             textAlign = TextAlign.Center,
             style = Typography.body1,
             modifier = Modifier
@@ -112,7 +110,6 @@ fun CustomScrollableArticle(article: Article) {
         )
         Text(
             text = article.text,
-            color = Color.LightGray,
             textAlign = TextAlign.Justify,
             style = Typography.body1,
             modifier = Modifier
