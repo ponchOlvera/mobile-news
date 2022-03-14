@@ -40,6 +40,7 @@ import com.wizeline.mobilenews.ui.common.OutlinedFormInput
 import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import com.wizeline.mobilenews.ui.theme.SpaceCadet
+import com.wizeline.mobilenews.utils.ResourceProvider
 import kotlinx.coroutines.launch
 
 @Composable
@@ -179,7 +180,7 @@ private fun ArticleForm(navController: NavController) {
             }
             OutlinedFormInput(
                 articleTitle,
-                "Post title",
+                stringResource(R.string.input_placeholder_post_title),
                 { createArticleViewModel.updateArticleTitle(it) },
                 backgroundInputColor,
                 onDoneCallback,
@@ -187,7 +188,7 @@ private fun ArticleForm(navController: NavController) {
             )
             OutlinedFormInput(
                 articleAuthor,
-                "Post author",
+                stringResource(R.string.input_placeholder_post_author),
                 { createArticleViewModel.updateArticleAuthor(it) },
                 backgroundInputColor,
                 onDoneCallback,
@@ -195,7 +196,7 @@ private fun ArticleForm(navController: NavController) {
             )
             OutlinedFormInput(
                 articleDescription,
-                "Post description",
+                stringResource(R.string.input_placeholder_post_description),
                 { createArticleViewModel.updateArticleDescription(it) },
                 backgroundInputColor,
                 onDoneCallback,
@@ -217,12 +218,13 @@ private fun ArticleForm(navController: NavController) {
                     contentScale = ContentScale.Crop,
                     contentDescription = stringResource(R.string.msg_select_image)
                 )
-                GradientButton("UPLOAD IMAGE",
+                GradientButton(
+                    stringResource(R.string.btn_upload_image),
                     modifier = Modifier
                         .padding(start = 8.dp, end = 16.dp)
                         .weight(1f),
                     onClick = {
-                        launcher.launch("image/*")
+                        launcher.launch(ResourceProvider.getString(R.string.img_selector_format))
                     })
             }
             Row(Modifier.padding(top = 24.dp)) {
