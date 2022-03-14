@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun SearchResults(viewModel: ArticleViewModel) {
+fun SearchResults(viewModel: SearchViewModel) {
     val articles = viewModel.lazyArticles
     SliderArticles(articles, viewModel.articleClickedPos)
 }

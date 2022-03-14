@@ -24,7 +24,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun SearchScreen(navController: NavController, viewModel: ArticleViewModel) {
+fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
     val searchResultsScreen = stringResource(R.string.search_results_screen)
     val textState = remember { mutableStateOf(TextFieldValue()) }
     val list =

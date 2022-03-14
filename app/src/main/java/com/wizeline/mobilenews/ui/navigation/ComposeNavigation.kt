@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.createArticle.CreateArticleScreen
 import com.wizeline.mobilenews.ui.custom.CustomPager
-import com.wizeline.mobilenews.ui.dashboard.ArticleViewModel
+import com.wizeline.mobilenews.ui.dashboard.SearchViewModel
 import com.wizeline.mobilenews.ui.dashboard.SearchResults
 import com.wizeline.mobilenews.ui.dashboard.SearchScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,12 +37,12 @@ fun ComposeNavigation() {
         navigation(startDestination = searchScreen, route = "searchRoute") {
             composable(searchScreen) {
                 val searchBackStackEntry = remember { navController.getBackStackEntry("searchRoute") }
-                val viewModel: ArticleViewModel = hiltViewModel(searchBackStackEntry)
+                val viewModel: SearchViewModel = hiltViewModel(searchBackStackEntry)
                 SearchScreen(navController, viewModel)
             }
             composable(searchResultsScreen) {
                 val searchBackStackEntry = remember { navController.getBackStackEntry("searchRoute") }
-                val viewModel: ArticleViewModel = hiltViewModel(searchBackStackEntry)
+                val viewModel: SearchViewModel = hiltViewModel(searchBackStackEntry)
                 SearchResults(viewModel)
             }
         }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class ArticleViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel() {
+class SearchViewModel @Inject constructor(private val useCase: SearchNewsUseCase) : ViewModel() {
 
     lateinit var lazyArticles: LazyPagingItems<Article>
     var articleClickedPos: Int = 0
