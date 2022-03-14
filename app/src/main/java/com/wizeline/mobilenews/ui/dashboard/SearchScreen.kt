@@ -1,5 +1,7 @@
 package com.wizeline.mobilenews.ui.dashboard
 
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,22 +10,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.gson.Gson
+import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
+import com.wizeline.mobilenews.ui.navigation.toJson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun Dashboard(navController: NavController) {
-    val viewModel: ArticleViewModel = hiltViewModel()
+fun SearchScreen(navController: NavController, viewModel: ArticleViewModel) {
+    val searchResultsScreen = stringResource(R.string.search_results_screen)
     val textState = remember { mutableStateOf(TextFieldValue()) }
     val list =
         viewModel.getArticlesBySearch(textState.value.text).asFlow().collectAsLazyPagingItems()
@@ -57,7 +64,17 @@ fun Dashboard(navController: NavController) {
                 },
                 content = {
                     items(list.itemCount) { index ->
-                        list[index]?.let { ArticleItem(article = it) }
+                        list[index]?.let { ArticleItem(article = it, Modifier.clickable {
+                            println("Clicked ${it.title}")
+//                            val json = Uri.encode(Gson().toJson(it))
+//                            val json = it.toJson()
+//                            println("Clicked $json")
+//                            navController.navigate("$searchResultsScreen/$json")
+                            viewModel.lazyArticles = list
+                            viewModel.articleClickedPos = index
+                            navController.navigate(searchResultsScreen)
+//                            navController.navigate("$globalScreen?article={${it.title}}")
+                        }) }
                     }
                     list.apply {
                         when {
