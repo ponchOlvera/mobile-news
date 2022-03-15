@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.wizeline.mobilenews.FIRST_LIST_ITEM_POS
 import com.wizeline.mobilenews.HALF_PAST_ITEM_LEFT
 import com.wizeline.mobilenews.HALF_PAST_ITEM_RIGHT
 import com.wizeline.mobilenews.domain.models.Article
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SliderArticles(
     articles: LazyPagingItems<Article>,
-    navigateToPos: Int = 0
+    navigateToPos: Int = FIRST_LIST_ITEM_POS
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()

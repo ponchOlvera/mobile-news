@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.compose.LazyPagingItems
 import com.wizeline.mobilenews.EMPTY_STRING
+import com.wizeline.mobilenews.FIRST_LIST_ITEM_POS
 import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.domain.usecases.SearchNewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,7 @@ class SearchViewModel @Inject constructor(private val useCase: SearchNewsUseCase
 
     lateinit var lazyArticles: LazyPagingItems<Article>
         private set
-    var articleClickedPos: Int = 0
+    var articleClickedPos: Int = FIRST_LIST_ITEM_POS
         private set
 
     var searchStr: String by mutableStateOf(EMPTY_STRING)

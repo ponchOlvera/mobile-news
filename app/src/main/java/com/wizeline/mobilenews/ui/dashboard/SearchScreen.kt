@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -33,10 +34,10 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
                 value = viewModel.searchStr,
                 onValueChange = { viewModel.updateSearchStr(it) },
                 singleLine = true,
-                shape = RoundedCornerShape(30.dp),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.corner_radius)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(dimensionResource(R.dimen.default_padding))
                     .constrainAs(edit_text) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -45,8 +46,8 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
 
             )
             LazyColumn(contentPadding = PaddingValues(
-                horizontal = 16.dp,
-                vertical = 8.dp
+                horizontal = dimensionResource(R.dimen.default_padding),
+                vertical = dimensionResource(R.dimen.padding_small)
             ),
                 modifier = Modifier.constrainAs(news) {
                     top.linkTo(edit_text.bottom)

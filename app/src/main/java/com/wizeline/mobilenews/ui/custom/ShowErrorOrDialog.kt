@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,7 +22,7 @@ fun ShowErrorOrDialog(state: LoadState.Error) {
             textAlign = TextAlign.Center,
             style = Typography.body1,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(dimensionResource(R.dimen.padding_small))
         )
     } else {
         CustomDialog(stringResource(R.string.error_message))
