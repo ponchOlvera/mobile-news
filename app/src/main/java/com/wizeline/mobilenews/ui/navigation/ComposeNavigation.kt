@@ -25,6 +25,7 @@ fun ComposeNavigation() {
     val searchScreen = stringResource(R.string.search_screen)
     val createArticleScreen = stringResource(R.string.create_article_screen)
     val searchResultsScreen = stringResource(R.string.search_results_screen)
+    val searchRoute = stringResource(R.string.navigation_search_route)
 
     NavHost(navController = navController, startDestination = globalScreen) {
         composable(globalScreen) {
@@ -34,14 +35,14 @@ fun ComposeNavigation() {
             )
         }
         composable(createArticleScreen) { CreateArticleScreen(navController) }
-        navigation(startDestination = searchScreen, route = "searchRoute") {
+        navigation(startDestination = searchScreen, route = searchRoute) {
             composable(searchScreen) {
-                val searchBackStackEntry = remember { navController.getBackStackEntry("searchRoute") }
+                val searchBackStackEntry = remember { navController.getBackStackEntry(searchRoute) }
                 val viewModel: SearchViewModel = hiltViewModel(searchBackStackEntry)
                 SearchScreen(navController, viewModel)
             }
             composable(searchResultsScreen) {
-                val searchBackStackEntry = remember { navController.getBackStackEntry("searchRoute") }
+                val searchBackStackEntry = remember { navController.getBackStackEntry(searchRoute) }
                 val viewModel: SearchViewModel = hiltViewModel(searchBackStackEntry)
                 SearchResults(viewModel)
             }

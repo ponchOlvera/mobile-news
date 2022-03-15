@@ -21,22 +21,25 @@ import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
+import com.wizeline.mobilenews.EMPTY_STRING
 
 @ExperimentalCoroutinesApi
 @Composable
 fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
     val searchResultsScreen = stringResource(R.string.search_results_screen)
-    val textState = remember { mutableStateOf(TextFieldValue()) }
     val list =
-        viewModel.getArticlesBySearch(textState.value.text).asFlow().collectAsLazyPagingItems()
+        viewModel.getArticlesBySearch(viewModel.searchStr).asFlow().collectAsLazyPagingItems()
+
     Column {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (edit_text, news) = createRefs()
             OutlinedTextField(
-                value = textState.value,
-                onValueChange = { query ->
-                    textState.value = query
-                },
+                value = viewModel.searchStr,
+                onValueChange = { viewModel.updateSearchStr(it) },
+                singleLine = true,
                 shape = RoundedCornerShape(30.dp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -45,7 +48,7 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
-                    }
+                    },
 
             )
             LazyColumn(contentPadding = PaddingValues(
@@ -60,8 +63,8 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
                 content = {
                     items(list.itemCount) { index ->
                         list[index]?.let { ArticleItem(article = it, Modifier.clickable {
-                            viewModel.lazyArticles = list
-                            viewModel.articleClickedPos = index
+                            viewModel.updateLazyArticles(list)
+                            viewModel.updateClickedArticle(index)
                             navController.navigate(searchResultsScreen)
                         }) }
                     }

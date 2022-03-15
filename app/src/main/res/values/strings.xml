@@ -10,6 +10,8 @@
     <string name="create_article_screen">Create Article</string>
     <string name="search_results_screen">Search Results</string>
 
+    <string name="navigation_search_route">searchRoute</string>
+
 
     <string name="search">Search</string>
     <string name="dismiss">Dismiss</string>
