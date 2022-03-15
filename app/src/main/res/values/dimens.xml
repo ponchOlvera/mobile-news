@@ -6,7 +6,7 @@
     <dimen name="search_input_padding">16dp</dimen>
 
     <!--    Menu-->
-    <dimen name="menu_height">80dp</dimen>
+    <dimen name="menu_height">70dp</dimen>
     <!-- Text -->
     <dimen name="title_size">24sp</dimen>
     <dimen name="subtitle_size">20sp</dimen>

@@ -33,7 +33,8 @@ fun MainMenu(
 ) {
     ConstraintLayout(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(dimensionResource(R.dimen.menu_height)),
     ) {
         val (tabs, searchButton) = createRefs()
         Row(
