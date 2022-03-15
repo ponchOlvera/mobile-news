@@ -7,6 +7,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ fun CommunityScreen(navController: NavController) {
             },
             backgroundColor = Percent50Light,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(dimensionResource(R.dimen.padding_small))
                 .constrainAs(fabBtn) {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)

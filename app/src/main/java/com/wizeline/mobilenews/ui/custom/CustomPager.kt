@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.wizeline.mobilenews.FIRST_LIST_ITEM_POS
 import com.wizeline.mobilenews.ui.dashboard.GlobalNewsPage
 import com.wizeline.mobilenews.ui.navigation.CommunityScreen
 import com.wizeline.mobilenews.ui.navigation.MainMenu
@@ -26,7 +27,7 @@ fun CustomPager(tabs: List<TabData>, navController: NavController) {
         ) { index ->
             selectedTab.value = index
         }
-        if (selectedTab.value == 0) {
+        if (selectedTab.value == FIRST_LIST_ITEM_POS) {
             CommunityScreen(navController = navController)
         } else {
             GlobalNewsPage()

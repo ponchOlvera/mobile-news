@@ -14,3 +14,6 @@ val Capri = Color(0xFF43C6FE)
 val CompletelyLight = Color(0xFFFFFFFF)
 val Percent50Light = Color(0x80FFFFFF)
 val percent20Light = Color(0x33FFFFFF)
+
+val GradientStart = Color(0xFF5603BD)
+val GradientEnd = Color(0xFF00B3FF)

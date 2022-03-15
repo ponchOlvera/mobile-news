@@ -11,8 +11,10 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.wizeline.mobilenews.EMPTY_STRING
+import com.wizeline.mobilenews.R
 
 @Composable
 fun OutlinedFormInput(
@@ -35,7 +37,7 @@ fun OutlinedFormInput(
         },
         singleLine = singleLine,
         onValueChange = { onValueChange(it) },
-        shape = RoundedCornerShape(30.dp),
+        shape = RoundedCornerShape(dimensionResource(R.dimen.padding_30)),
         modifier = modifier
     )
 }
