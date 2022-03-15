@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.ui.custom
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -36,6 +37,7 @@ fun SliderArticles(
     LazyRow(
         state = listState,
         modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.Center,
         content = {
             items(articles.itemCount) { index ->
                 articles[index]?.let { article -> CustomScrollableArticle(article) }
