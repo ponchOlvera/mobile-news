@@ -22,9 +22,9 @@ import com.wizeline.mobilenews.ui.theme.Typography
 import com.wizeline.mobilenews.ui.theme.percent20Light
 
 @Composable
-fun ArticleItem(article: Article) {
+fun ArticleItem(article: Article, modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .fillMaxWidth()
             .height(250.dp),
