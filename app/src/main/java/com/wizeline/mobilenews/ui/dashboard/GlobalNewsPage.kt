@@ -1,5 +1,6 @@
 package com.wizeline.mobilenews.ui.dashboard
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -32,6 +33,7 @@ fun GlobalNewsPage() {
     LazyRow(
         state = listState,
         modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.Center,
         content = {
             items(lazyArticles.itemCount) { index ->
                 lazyArticles[index]?.let { article -> CustomScrollableArticle(article) }

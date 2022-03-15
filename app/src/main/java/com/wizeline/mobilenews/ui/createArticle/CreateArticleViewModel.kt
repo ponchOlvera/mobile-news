@@ -7,9 +7,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wizeline.mobilenews.EMPTY_STRING
+import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.models.CommunityArticle
 import com.wizeline.mobilenews.domain.usecases.SaveCommunityArticleUseCase
+import com.wizeline.mobilenews.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,7 +54,7 @@ class CreateArticleViewModel @Inject constructor(val saveCommunityArticleUseCase
             val response =
                 saveCommunityArticleUseCase(communityArticle, imageUri ?: Uri.EMPTY)
             if (response is NetworkResults.Success) {
-                uiState = UiState.RequestCompleted("Post successfully created!")
+                uiState = UiState.RequestCompleted(ResourceProvider.getString(R.string.msg_post_successfully_created))
                 return@launch
             }
         }
@@ -60,15 +62,15 @@ class CreateArticleViewModel @Inject constructor(val saveCommunityArticleUseCase
 
     private fun allFieldsCorrect(): UiState {
         return if (articleTitle.trim().isEmpty()) {
-            UiState.MissingFieldAction("The post title should not be empty")
+            UiState.MissingFieldAction(ResourceProvider.getString(R.string.msg_missing_post_title))
         } else if (articleAuthor.trim().isEmpty()) {
-            UiState.MissingFieldAction("The post author should not be empty")
+            UiState.MissingFieldAction(ResourceProvider.getString(R.string.msg_missing_post_author))
         } else if (!authorNameRegex.matches(articleAuthor)) {
-            UiState.MissingFieldAction("The post author is invalid, no special characters nor numbers allowed")
+            UiState.MissingFieldAction(ResourceProvider.getString(R.string.msg_invalid_post_author))
         } else if (articleDescription.trim().isEmpty()) {
-            UiState.MissingFieldAction("The post description should not be empty")
+            UiState.MissingFieldAction(ResourceProvider.getString(R.string.msg_missing_post_description))
         } else if (imageUri.toString().trim().isEmpty()) {
-            UiState.MissingFieldAction("You have to select an image")
+            UiState.MissingFieldAction(ResourceProvider.getString(R.string.msg_missing_post_image))
         } else {
             UiState.NoState
         }
