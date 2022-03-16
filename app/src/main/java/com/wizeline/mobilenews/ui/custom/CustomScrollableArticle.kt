@@ -1,15 +1,14 @@
 package com.wizeline.mobilenews.ui.custom
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
@@ -43,15 +42,20 @@ fun CustomScrollableArticle(article: Article?) {
 
         Card(
             elevation = dimensionResource(R.dimen.card_elevation),
+            border = BorderStroke(
+                dimensionResource(R.dimen.card_border_width),
+                Color.Black
+            ),
             shape = RoundedCornerShape(
                 topStart = dimensionResource(R.dimen.corner_radius),
                 topEnd= dimensionResource(R.dimen.corner_radius),
             ),
             backgroundColor = MaterialTheme.colors.background,
-            modifier = Modifier.padding(
+            modifier = Modifier
+                .padding(
                 top =
                 screenHeight -(remainingTitleHeight + dimensionResource(R.dimen.corner_radius))
-            ),
+                )
         ){
             Column {
                 Text(
