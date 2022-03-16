@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.wizeline.mobilenews.EMPTY_STRING
@@ -58,10 +57,13 @@ fun MainMenu(
                 ) {
                     Text(
                         text = tab.tabName,
-                        color = Color.LightGray,
                         style = if (selected[index].value) Typography.h3 else Typography.h2,
                         modifier = Modifier
-                            .padding(dimensionResource(R.dimen.default_padding))
+                            .padding(
+                                top = dimensionResource(R.dimen.mini_padding),
+                                start = dimensionResource(R.dimen.mini_padding),
+                                end = dimensionResource(R.dimen.mini_padding)
+                            )
                             .clickable(onClick = {
                                 selected.map { it.value = false }
                                 selected[index].value = true

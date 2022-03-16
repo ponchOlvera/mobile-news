@@ -1,3 +1,5 @@
+
+
 package com.wizeline.mobilenews.ui.dashboard
 
 import androidx.compose.runtime.Composable
@@ -14,5 +16,4 @@ fun GlobalNewsPage() {
     val articles = viewModel.getArticles().asFlow()
     val lazyArticles = articles.collectAsLazyPagingItems()
     SliderArticles(lazyArticles)
-
 }
