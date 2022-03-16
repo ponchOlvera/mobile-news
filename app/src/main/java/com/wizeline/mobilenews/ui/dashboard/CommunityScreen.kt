@@ -29,11 +29,11 @@ fun CommunityScreen(navController: NavController) {
     val viewModel: CommunityViewModel = hiltViewModel()
     val articles = viewModel.getArticles().asFlow()
     val lazyArticles = articles.collectAsLazyPagingItems()
-    SliderArticles(lazyArticles)
     val createArticleScreen = stringResource(R.string.create_article_screen)
     viewModel.getArticles()
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (fabBtn) = createRefs()
+        SliderArticles(lazyArticles)
         FloatingActionButton(
             onClick = {
                 navController.navigate(createArticleScreen) {

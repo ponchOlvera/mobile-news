@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.wizeline.mobilenews.PAGE_SIZE
+import com.wizeline.mobilenews.PAGE_SIZE_COMMUNITY
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
 import com.wizeline.mobilenews.data.apiservice.RetrofitProvider
 import com.wizeline.mobilenews.data.apiservice.SupportInterceptor
@@ -34,20 +35,20 @@ class NetworkModule {
         newscatcherApiService: NewscatcherApiService
     ): NetworkRepository = NetworkRepository(newscatcherApiService)*/
 
-    @Provides
-    fun provideQueryProductsByName() = FirebaseFirestore.getInstance()
-        .collection(ARTICLE_COLLECTION)
-//        .orderBy("author", ASCENDING)
-        .limit(PAGE_SIZE.toLong())
+//    @Provides
+//    fun provideQueryArticles() = FirebaseFirestore.getInstance()
+//        .collection(ARTICLE_COLLECTION)
+//        .limit(5)
 
     @Provides
     fun provideFirestorePagingSource(
-        queryProductsByName: Query
-    ) = FirestorePagingSource(queryProductsByName)
+//        queryArticles: Query,
+        firebaseFirestoreManager: FirebaseFirestoreManager
+    ) = FirestorePagingSource(firebaseFirestoreManager)
 
     @Provides
     fun providePagingConfig() = PagingConfig(
-        pageSize = PAGE_SIZE
+        pageSize = PAGE_SIZE_COMMUNITY
     )
 
     @Provides
