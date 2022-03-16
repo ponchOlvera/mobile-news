@@ -1,10 +1,11 @@
 package com.wizeline.mobilenews.ui.dashboard
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagedList
-import com.wizeline.mobilenews.PAGE_SIZE
-import com.wizeline.mobilenews.domain.models.CommunityArticle
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.domain.usecases.GetCommunityNewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,11 +16,15 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityViewModel @Inject constructor(private val useCase: GetCommunityNewsUseCase) : ViewModel()  {
 
-    fun getArticles() {
-        viewModelScope.launch {
-            val results = useCase()
-            println("COMMUNITY RES: $results")
-        }
+//    fun getArticles() {
+//        viewModelScope.launch {
+//            val results = useCase()
+//            println("COMMUNITY RES: $results")
+//        }
+//    }
+
+    fun getArticles(): LiveData<PagingData<Article>> {
+        return useCase.getAllArticles().cachedIn(viewModelScope)
     }
 }
 

@@ -13,9 +13,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
+import com.wizeline.mobilenews.ui.custom.SliderArticles
 import com.wizeline.mobilenews.ui.dashboard.CommunityViewModel
 import com.wizeline.mobilenews.ui.theme.Percent50Light
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,6 +27,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun CommunityScreen(navController: NavController) {
     val viewModel: CommunityViewModel = hiltViewModel()
+    val articles = viewModel.getArticles().asFlow()
+    val lazyArticles = articles.collectAsLazyPagingItems()
+    SliderArticles(lazyArticles)
     val createArticleScreen = stringResource(R.string.create_article_screen)
     viewModel.getArticles()
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
