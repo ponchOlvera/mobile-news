@@ -2,8 +2,10 @@ package com.wizeline.mobilenews.data.repo
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import androidx.paging.*
-import com.google.firebase.firestore.QuerySnapshot
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager
 import com.wizeline.mobilenews.data.models.NetworkResults
 import com.wizeline.mobilenews.domain.data_source.FirestorePagingSource

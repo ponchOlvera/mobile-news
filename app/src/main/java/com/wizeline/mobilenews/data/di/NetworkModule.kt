@@ -1,11 +1,6 @@
 package com.wizeline.mobilenews.data.di
 
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
-import com.wizeline.mobilenews.PAGE_SIZE
 import com.wizeline.mobilenews.PAGE_SIZE_COMMUNITY
 import com.wizeline.mobilenews.data.apiservice.NewscatcherApiService
 import com.wizeline.mobilenews.data.apiservice.RetrofitProvider
@@ -13,9 +8,7 @@ import com.wizeline.mobilenews.data.apiservice.SupportInterceptor
 import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager
 import com.wizeline.mobilenews.data.db.firebase.FirebaseFirestoreManager.Companion.ARTICLE_COLLECTION
 import com.wizeline.mobilenews.data.repo.FirebaseRepository
-import com.wizeline.mobilenews.data.repo.NetworkRepository
 import com.wizeline.mobilenews.domain.data_source.FirestorePagingSource
-import com.wizeline.mobilenews.domain.models.CommunityArticle
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,20 +22,8 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-  /*  @Provides
-    @Singleton
-    fun provideNetworkRepository(
-        newscatcherApiService: NewscatcherApiService
-    ): NetworkRepository = NetworkRepository(newscatcherApiService)*/
-
-//    @Provides
-//    fun provideQueryArticles() = FirebaseFirestore.getInstance()
-//        .collection(ARTICLE_COLLECTION)
-//        .limit(5)
-
     @Provides
     fun provideFirestorePagingSource(
-//        queryArticles: Query,
         firebaseFirestoreManager: FirebaseFirestoreManager
     ) = FirestorePagingSource(firebaseFirestoreManager)
 
