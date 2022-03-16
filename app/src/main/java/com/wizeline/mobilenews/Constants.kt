@@ -5,6 +5,7 @@ const val REGEX_IMG = ".(jpg|png|jpeg)"
 const val ARTICLE_IMG_GRADIENT_HEIGHT = 6
 const val ARTICLE_IMG_HEIGHT = 4
 const val PAGE_SIZE = 50
+const val PAGE_SIZE_COMMUNITY = 10
 const val EMPTY_STRING = ""
 const val HALF_PAST_ITEM_RIGHT = 500
 const val HALF_PAST_ITEM_LEFT = 500
