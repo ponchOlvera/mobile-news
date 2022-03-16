@@ -32,6 +32,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.wizeline.mobilenews.DEFAULT_WEIGHT
 import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.common.CustomSnackbar
@@ -40,6 +41,7 @@ import com.wizeline.mobilenews.ui.common.OutlinedFormInput
 import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
 import com.wizeline.mobilenews.ui.theme.MobileNewsTheme
 import com.wizeline.mobilenews.ui.theme.SpaceCadet
+import com.wizeline.mobilenews.utils.ResourceProvider
 import kotlinx.coroutines.launch
 
 @Composable
@@ -103,7 +105,7 @@ private fun ArticleForm(navController: NavController) {
 
     val modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)
+        .padding(dimensionResource(R.dimen.default_padding))
 
     val onDoneCallback: () -> Unit = {
         focusKeyboard?.hide()
@@ -179,7 +181,7 @@ private fun ArticleForm(navController: NavController) {
             }
             OutlinedFormInput(
                 articleTitle,
-                "Post title",
+                stringResource(R.string.input_placeholder_post_title),
                 { createArticleViewModel.updateArticleTitle(it) },
                 backgroundInputColor,
                 onDoneCallback,
@@ -187,7 +189,7 @@ private fun ArticleForm(navController: NavController) {
             )
             OutlinedFormInput(
                 articleAuthor,
-                "Post author",
+                stringResource(R.string.input_placeholder_post_author),
                 { createArticleViewModel.updateArticleAuthor(it) },
                 backgroundInputColor,
                 onDoneCallback,
@@ -195,43 +197,47 @@ private fun ArticleForm(navController: NavController) {
             )
             OutlinedFormInput(
                 articleDescription,
-                "Post description",
+                stringResource(R.string.input_placeholder_post_description),
                 { createArticleViewModel.updateArticleDescription(it) },
                 backgroundInputColor,
                 onDoneCallback,
-                modifier.height(180.dp),
+                modifier.height(dimensionResource(R.dimen.post_description_height)),
                 false
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = dimensionResource(R.dimen.padding_small))
             ) {
                 Image(
                     bitmap = bitmap.value!!.asImageBitmap(),
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 16.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .height(120.dp),
+                        .weight(DEFAULT_WEIGHT)
+                        .padding(start = dimensionResource(R.dimen.default_padding))
+                        .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_radius)))
+                        .height(dimensionResource(R.dimen.post_image_selection_height)),
                     contentScale = ContentScale.Crop,
                     contentDescription = stringResource(R.string.msg_select_image)
                 )
-                GradientButton("UPLOAD IMAGE",
+                GradientButton(
+                    stringResource(R.string.btn_upload_image),
                     modifier = Modifier
-                        .padding(start = 8.dp, end = 16.dp)
-                        .weight(1f),
+                        .padding(
+                            start = dimensionResource(R.dimen.padding_small),
+                            end = dimensionResource(R.dimen.default_padding)
+                        )
+                        .weight(DEFAULT_WEIGHT),
                     onClick = {
-                        launcher.launch("image/*")
+                        launcher.launch(ResourceProvider.getString(R.string.img_selector_format))
                     })
             }
-            Row(Modifier.padding(top = 24.dp)) {
+            Row(Modifier.padding(top = dimensionResource(R.dimen.create_post_btn_top_padding))) {
                 GradientButton(
                     text = stringResource(R.string.btn_label_create_post),
                     enabled = !showLoader,
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .weight(1f)
+                        .padding(horizontal = dimensionResource(R.dimen.default_padding))
+                        .weight(DEFAULT_WEIGHT)
                 ) {
                     coroutineScope.launch {
                         createArticleViewModel.createCommunityPost()

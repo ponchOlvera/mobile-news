@@ -14,9 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wizeline.mobilenews.DEFAULT_WEIGHT
 import com.wizeline.mobilenews.R
 import com.wizeline.mobilenews.ui.theme.Capri
 import com.wizeline.mobilenews.ui.theme.MediumPurple
@@ -43,13 +45,13 @@ fun GradientButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        shape = RoundedCornerShape(30.dp)
+        shape = RoundedCornerShape(dimensionResource(R.dimen.padding_30))
     ) {
         Box(
             modifier = Modifier
-                .weight(1f)
-                .background(gradient, RoundedCornerShape(30.dp))
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .weight(DEFAULT_WEIGHT)
+                .background(gradient, RoundedCornerShape(dimensionResource(R.dimen.padding_30)))
+                .padding(dimensionResource(R.dimen.default_padding)),
             contentAlignment = Alignment.Center
         ) {
             Text(text = text, color = textColor)
@@ -63,7 +65,7 @@ fun PreviewGradientButton() {
     Row() {
         GradientButton(
             text = stringResource(R.string.btn_click_me),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(DEFAULT_WEIGHT)
         ) {
 
         }

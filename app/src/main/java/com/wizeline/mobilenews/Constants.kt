@@ -8,3 +8,5 @@ const val PAGE_SIZE = 50
 const val EMPTY_STRING = ""
 const val HALF_PAST_ITEM_RIGHT = 500
 const val HALF_PAST_ITEM_LEFT = 500
+const val FIRST_LIST_ITEM_POS = 0
+const val DEFAULT_WEIGHT = 1f

@@ -20,6 +20,7 @@ buildscript {
         activity_compose_version ="1.4.0"
         pager_version = "0.24.2-alpha"
         paging_version = "3.1.0"
+        compose_live_data = "1.0.0-beta01"
     }
     repositories {
         google()

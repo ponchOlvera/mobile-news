@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.annotation.ExperimentalCoilApi
@@ -20,16 +21,17 @@ import com.wizeline.mobilenews.domain.models.Article
 import com.wizeline.mobilenews.ui.theme.Percent50Light
 import com.wizeline.mobilenews.ui.theme.Typography
 import com.wizeline.mobilenews.ui.theme.percent20Light
+import com.wizeline.mobilenews.R
 
 @Composable
-fun ArticleItem(article: Article) {
+fun ArticleItem(article: Article, modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+        modifier = modifier
+            .padding(dimensionResource(R.dimen.padding_small))
             .fillMaxWidth()
-            .height(250.dp),
-        elevation = 2.dp,
-        shape = RoundedCornerShape(corner = CornerSize(16.dp))
+            .height(dimensionResource(R.dimen.search_article_item_height)),
+        elevation = dimensionResource(R.dimen.card_elevation),
+        shape = RoundedCornerShape(corner = CornerSize(dimensionResource(R.dimen.corner_radius)))
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (image, bottom_info) = createRefs()
@@ -44,7 +46,7 @@ fun ArticleItem(article: Article) {
                 ArticleImage(article = article)
             }
             ConstraintLayout(modifier = Modifier
-                .blur(radius = 150.dp)
+                .blur(radius = dimensionResource(R.dimen.search_article_title_height))
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
@@ -54,7 +56,7 @@ fun ArticleItem(article: Article) {
                     )
                 )
                 .fillMaxWidth()
-                .height(80.dp)
+                .height(dimensionResource(R.dimen.search_article_title_bg_height))
                 .constrainAs(bottom_info) {
                     bottom.linkTo(parent.bottom)
                 }) {
@@ -62,7 +64,7 @@ fun ArticleItem(article: Article) {
                 Text(text = article.title,
                     style = Typography.h4,
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(dimensionResource(R.dimen.padding_small))
                         .constrainAs(title) {
                             top.linkTo(parent.top)
                         })
@@ -71,7 +73,7 @@ fun ArticleItem(article: Article) {
                     text = article.author.orEmpty(),
                     style = Typography.h4,
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(dimensionResource(R.dimen.padding_small))
                         .constrainAs(author) {
                             top.linkTo(title.bottom)
                             end.linkTo(parent.end)

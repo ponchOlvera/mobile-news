@@ -22,6 +22,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.wizeline.mobilenews.EMPTY_STRING
 import com.wizeline.mobilenews.R
+import com.wizeline.mobilenews.ui.theme.GradientEnd
+import com.wizeline.mobilenews.ui.theme.GradientStart
 import com.wizeline.mobilenews.ui.theme.Typography
 
 @Composable
@@ -33,7 +35,8 @@ fun MainMenu(
 ) {
     ConstraintLayout(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(dimensionResource(R.dimen.menu_height)),
     ) {
         val (tabs, searchButton) = createRefs()
         Row(
@@ -67,11 +70,11 @@ fun MainMenu(
                     if (selected[index].value) {
                         Box(
                             Modifier
-                                .size(10.dp)
+                                .size(dimensionResource(R.dimen.bottom_dot_size))
                                 .clip(CircleShape)
                                 .background(
                                     brush = Brush.linearGradient(
-                                        colors = listOf(Color(0xFF5603BD), Color(0xFF00B3FF)),
+                                        colors = listOf(GradientStart, GradientEnd),
                                     ),
                                 )
                         )

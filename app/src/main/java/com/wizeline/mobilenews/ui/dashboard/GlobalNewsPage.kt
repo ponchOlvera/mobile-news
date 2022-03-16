@@ -1,24 +1,11 @@
 package com.wizeline.mobilenews.ui.dashboard
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asFlow
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.wizeline.mobilenews.HALF_PAST_ITEM_LEFT
-import com.wizeline.mobilenews.HALF_PAST_ITEM_RIGHT
-import com.wizeline.mobilenews.ui.custom.CustomScrollableArticle
-import com.wizeline.mobilenews.ui.custom.LoadingProgressBar
-import com.wizeline.mobilenews.ui.custom.ShowErrorOrDialog
-import kotlinx.coroutines.CoroutineScope
+import com.wizeline.mobilenews.ui.custom.SliderArticles
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @Composable
@@ -26,8 +13,7 @@ fun GlobalNewsPage() {
     val viewModel: GlobalNewsViewModel = hiltViewModel()
     val articles = viewModel.getArticles().asFlow()
     val lazyArticles = articles.collectAsLazyPagingItems()
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
+    SliderArticles(lazyArticles)
 
     LazyRow(
         state = listState,
