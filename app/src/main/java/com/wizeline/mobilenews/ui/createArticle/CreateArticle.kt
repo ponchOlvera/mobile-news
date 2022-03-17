@@ -25,7 +25,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -165,7 +164,6 @@ private fun ArticleForm(navController: NavController) {
                     Icon(
                         painterResource(R.drawable.ic_baseline_arrow_back_24),
                         contentDescription = EMPTY_STRING,
-                        tint = Color.White,
                     )
                 }
                 Text(text = stringResource(R.string.title_create_article), modifier = Modifier

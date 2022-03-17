@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.wizeline.mobilenews.FIRST_LIST_ITEM_POS
 import com.wizeline.mobilenews.ui.dashboard.GlobalNewsPage
-import com.wizeline.mobilenews.ui.navigation.CommunityScreen
+import com.wizeline.mobilenews.ui.dashboard.CommunityScreen
 import com.wizeline.mobilenews.ui.navigation.MainMenu
 import com.wizeline.mobilenews.ui.navigation.TabData
 
