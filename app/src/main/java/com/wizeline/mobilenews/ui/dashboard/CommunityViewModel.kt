@@ -16,13 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityViewModel @Inject constructor(private val useCase: GetCommunityNewsUseCase) : ViewModel()  {
 
-//    fun getArticles() {
-//        viewModelScope.launch {
-//            val results = useCase()
-//            println("COMMUNITY RES: $results")
-//        }
-//    }
-
     fun getArticles(): LiveData<PagingData<Article>> {
         return useCase.getAllArticles().cachedIn(viewModelScope)
     }

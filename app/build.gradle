@@ -74,7 +74,6 @@ dependencies {
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "com.google.accompanist:accompanist-pager:$view_pager_compose"
     implementation "com.google.accompanist:accompanist-pager-indicators:$view_pager_compose"
-//    implementation "androidx.paging:paging-compose:$paging_version"
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
     implementation "androidx.paging:paging-rxjava2:$paging_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_live_data"
