@@ -31,6 +31,7 @@ object NewscatcherApi {
     const val BASE_URL = "https://api.newscatcherapi.com/v2/"
     const val SEARCH_NEWS = "search"
     const val LATEST_HEADLINES = "latest_headlines"
+    const val DEFAULT_ANDROID = "android"
     const val LANGUAGE = "es, en"
     const val TOPIC = "tech"
 }

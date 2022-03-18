@@ -16,7 +16,7 @@ class AllNewsPagingSource @Inject constructor(private val retrofitService: Newsc
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsArticle> {
         val position = params.key ?: 1
         val response =
-            retrofitService.getAllNews(pageSize = PAGE_SIZE, page = position)
+            retrofitService.searchNews(pageSize = PAGE_SIZE, page = position)
         return if (response.body() == null) {
             LoadResult.Error(
                 Exception(response.errorBody().toString())
