@@ -18,7 +18,7 @@ class NewsSearchPagingSource(
             LoadResult.Error(Exception("EMPTY LIST"))
         } else {
             val response =
-                retrofitService.searchNews(search, PAGE_SIZE, position)
+                retrofitService.searchNews(query = search, pageSize = PAGE_SIZE, page = position)
             return if (response.body() == null) {
                 LoadResult.Error(
                     Exception(response.errorBody().toString())
