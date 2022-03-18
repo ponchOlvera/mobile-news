@@ -45,7 +45,6 @@ fun SearchResults(
             Icon(
                 painterResource(R.drawable.ic_baseline_arrow_back_24),
                 contentDescription = EMPTY_STRING,
-                tint = Color.White,
             )
         }
     }

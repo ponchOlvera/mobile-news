@@ -114,7 +114,7 @@ fun NewsImage(article: Article, modifier: Modifier = Modifier) {
         painter = rememberImagePainter(
             data = articleImg,
             builder = {
-                placeholder(R.drawable.ic_launcher_background) //Todo: Change placeholder to loading
+                placeholder(R.drawable.ic_baseline_image_24)
             }
         ),
         contentDescription = null,
