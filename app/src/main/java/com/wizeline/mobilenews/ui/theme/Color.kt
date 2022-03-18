@@ -10,9 +10,11 @@ val DarkBlue = Color(0xFF27224A)
 val SpaceCadet = Color(0xFF2f2956)
 val MediumPurple = Color(0xFFA45BFF)
 val Capri = Color(0xFF43C6FE)
+val GrayTransparent = Color(0x80808080)
 
 val CompletelyLight = Color(0xFFFFFFFF)
 val Percent50Light = Color(0x80FFFFFF)
+val Percent10Dark = Color(0x1A000000)
 val percent20Light = Color(0x33FFFFFF)
 
 val GradientStart = Color(0xFF5603BD)

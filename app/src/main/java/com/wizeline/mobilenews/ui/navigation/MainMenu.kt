@@ -107,7 +107,6 @@ fun MainMenu(
                 Icon(
                     painterResource(R.drawable.ic_baseline_search_24),
                     contentDescription = EMPTY_STRING,
-                    tint = Color.White,
                 )
             }
         }

@@ -126,6 +126,13 @@ class FirebaseFirestoreManager(private val collectionName: String) {
             }
     }
 
+    fun getAllCommunityArticlesQuery(limit: Long): Query {
+        return getFirestoreDbCollection(collectionName)
+            .orderBy(PUBLISHED_DATE, Query.Direction.DESCENDING)
+            .limit(limit)
+    }
+
+
     suspend fun searchCommunityArticles(
         query: List<String> = emptyList(),
         dateFrom: Long,
