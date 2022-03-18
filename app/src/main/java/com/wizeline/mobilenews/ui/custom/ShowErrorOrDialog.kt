@@ -24,7 +24,7 @@ fun ShowErrorOrDialog(state: LoadState.Error) {
             textAlign = TextAlign.Center,
             style = Typography.body1,
             modifier = Modifier
-                .padding(dimensionResource(R.dimen.padding_small))
+                .padding(dimensionResource(R.dimen.default_padding))
         )
     } else {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -33,6 +33,7 @@ fun ShowErrorOrDialog(state: LoadState.Error) {
                 text = stringResource(R.string.search_error_message),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(
+                    vertical = dimensionResource(R.dimen.default_padding),
                     horizontal = dimensionResource(
                         id = R.dimen.padding_30
                     )
