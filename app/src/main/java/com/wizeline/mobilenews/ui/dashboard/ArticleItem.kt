@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import com.wizeline.mobilenews.ui.theme.Percent50Light
 import com.wizeline.mobilenews.ui.theme.Typography
 import com.wizeline.mobilenews.ui.theme.percent20Light
 import com.wizeline.mobilenews.R
+import com.wizeline.mobilenews.ui.theme.GrayTransparent
 
 @Composable
 fun ArticleItem(article: Article, modifier: Modifier = Modifier) {
@@ -47,14 +49,7 @@ fun ArticleItem(article: Article, modifier: Modifier = Modifier) {
             }
             ConstraintLayout(modifier = Modifier
                 .blur(radius = dimensionResource(R.dimen.search_article_title_height))
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            Percent50Light,
-                            percent20Light
-                        )
-                    )
-                )
+                .background(GrayTransparent)
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.search_article_title_bg_height))
                 .constrainAs(bottom_info) {
