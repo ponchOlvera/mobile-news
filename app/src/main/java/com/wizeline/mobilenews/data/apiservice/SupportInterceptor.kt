@@ -7,7 +7,7 @@ class SupportInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         request = request.newBuilder()
-            .addHeader("x-api-key", "7qNHXmc9kGDBk1vbfBJIhGS-b9HnFmbRCu1QQiKBOz8")
+            .addHeader("x-api-key", "YLhXj7teCTeu-DrezokCCNPLDCYo5nBJ2xCD5w8qJn0")
             .build()
         return chain.proceed(request)
     }
